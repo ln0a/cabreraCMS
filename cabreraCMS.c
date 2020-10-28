@@ -4,6 +4,7 @@
 #include <ctype.h>
 
 #define BUFFER_SIZE 512
+#define LINE_SIZE 512
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
 char *readLine(char filePath[], int lineNumber);
@@ -21,6 +22,8 @@ int main(void)
 		"<ul id=\"projects_container\">",
 		"<ul id=\"projects_tags\">",
 		"<li id=\"NAME_OF_PROJECT\" class=\"project\">",
+		"<ul id=\"project_tags\">",
+		"<ul id=\"project_gallery\">",
 	};
 	int tagsLength = LEN(template_tags);
 
@@ -42,17 +45,18 @@ int main(void)
 char *readLine(char filePath[], int lineNumber)
 {
     FILE *fp;
-	static char line[BUFFER_SIZE];
+	static char line[LINE_SIZE];
 	int i = 0;
 
     fp = fopen(filePath, "r");
 
     if (fp != NULL) {
 		while (fgets(line, LEN(line), fp) != NULL) {
+			// Remove whitespace
 			trimwhitespace(line);
 			if (i == lineNumber) {
 				fclose(fp);
-				return line;
+				return line; // Return desired line
 			}
 			else {
 				i++;
@@ -102,10 +106,11 @@ void trimwhitespace(char *str)
 }
 
 
+// Compare a specific line in file to tag
 int compareLineToTags(char line[], int tagsLength, int buffer, char tags[tagsLength][buffer])
 {
-	// compare strings
 	for (int i=0; i < tagsLength; i++) {
+		// Compare strings
 		if (strcmp(line, tags[i]) == 0) {
 			printf("success %d %s\n", i, line);
 			return 1;
