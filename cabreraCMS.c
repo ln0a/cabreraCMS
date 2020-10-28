@@ -12,7 +12,6 @@ void trimwhitespace(char *str);
 int compareLineToTags(char line[], int tagsLength, int buffer, char tags[tagsLength][buffer]);
 
 
-
 int main(void)
 {
 	char inFile[] = "templates/index_template.html";
@@ -27,15 +26,20 @@ int main(void)
 	};
 	int tagsLength = LEN(template_tags);
 
-	printf("\n\n%d tags available.\n\n", tagsLength);
+	printf("\n%d tags available.\n\n", tagsLength);
 
 
 	// Read each line in a file individually until EOF
 	int i = 0;
+
+	printf("Matched tags:\n");
+
 	while (readLine(inFile, i) != NULL) {
 		compareLineToTags(readLine(inFile, i), tagsLength, BUFFER_SIZE, template_tags);
 		i++;
 	}
+
+	printf("\n");
 
 	return 0;
 }
@@ -112,11 +116,8 @@ int compareLineToTags(char line[], int tagsLength, int buffer, char tags[tagsLen
 	for (int i=0; i < tagsLength; i++) {
 		// Compare strings
 		if (strcmp(line, tags[i]) == 0) {
-			printf("success %d %s\n", i, line);
+			printf("%s\n", line);
 			return 1;
-		}
-		else {
-			printf("        %d %s\n", i, line);
 		}
 	}
 
