@@ -26,11 +26,12 @@ int main(void)
 	// Read each line in a file individually until EOF
 	printf("Matched tags:\n");
 	compareTagsInFile(inFile, tagsLength, BUFFER_SIZE, template_tags);
-
 	printf("\n");
+
 
 	exploreDirectory(".");
 	cleanDirList();
+
 
 	return 0;
 }
