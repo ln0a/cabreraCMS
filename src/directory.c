@@ -9,32 +9,21 @@
   DIRECTORY STRUCTURE (2 LEVELS):
 
   projects               >  project1  >  .txt
-  self-defined:             project2     .img
+  { self-defined: }         project2     .img
   about                     project3     .png
-  contact                                .mp4
-  etc.
-  { ignore following: }
+  contact                   ...          .mp4
+  etc.                      ...          ...
+  { ignore following: }     ...
   src
   templates
   cabreraCMS
 
 \********************************************/
 
-char dirList[BUFFER_SIZE][WORD_LENGTH];
-char dirListFull[BUFFER_SIZE][WORD_LENGTH];
-char dirListIgnored[][WORD_LENGTH] = {
-	".",
-	"..",
-	"src",
-	"templates",
-	"cabreraCMS",
-	".git",
-	".ccls-cache"
-};
 
 
-// Explore directory structure and add to arrays
-int exploreDirectory(char path[])
+// Explore directory structure and add to array
+int exploreDirectory(char path[], int buffer, int n, char arr[buffer][n])
 {
 	struct dirent *item;
 
@@ -47,8 +36,8 @@ int exploreDirectory(char path[])
 
 	int i = 0;
 	while ((item = readdir(dir)) != NULL) {
-		// Add directories to dirList array
-		strcpy(dirListFull[i], item->d_name);
+		// Add directories to rootDirList array
+		strcpy(arr[i], item->d_name);
 		i++;
 	}
 
@@ -58,25 +47,41 @@ int exploreDirectory(char path[])
 
 
 // Remove ignored items from directory list
-int cleanDirList(void)
+int cleanDirList(int inLen, int ignoredLen, int outLen, int buffer,
+				 char arrIn[inLen][buffer],
+				 char arrIgnored[ignoredLen][buffer],
+				 char arrOut[outLen][buffer])
 {
 	int index, k = 0;
 
-	for (int i=0; i < LEN(dirListFull); i++) {
+	for (int i=0; i < inLen; i++) {
 		index = 0;
-		for (int j=0; j < LEN(dirListIgnored); j++) {
-			if (strcmp(dirListFull[i], dirListIgnored[j]) != 0) {
+		for (int j=0; j < ignoredLen; j++) {
+			if (strcmp(arrIn[i], arrIgnored[j]) != 0) {
 				// Strings are not the same
 				index++;
 			}
 		}
 
 		// No match has been found
-		if (index == LEN(dirListIgnored)) {
-			strcpy(dirList[k], dirListFull[i]);
+		if (index == ignoredLen) {
+			strcpy(arrOut[k], arrIn[i]);
 			k++;
 		}
 	}
 
-	return 0;
+	return 1;
+}
+
+
+// Search directory, generate project list array and clean
+int cleanDirectory(char path[], int buffer, int n, char dirListOut[buffer][n])
+{
+	char dirListFull[BUFFER_SIZE][WORD_LENGTH];
+
+	exploreDirectory(path, LEN(dirListFull), WORD_LENGTH, dirListFull);
+	cleanDirList(LEN(dirListFull), LEN(ignoredItems), n, WORD_LENGTH,
+				 dirListFull, ignoredItems, dirListOut);
+
+	return 1;
 }

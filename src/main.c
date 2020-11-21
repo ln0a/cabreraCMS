@@ -4,6 +4,8 @@
 #include "template.c"
 #include "directory.h"
 #include "directory.c"
+#include "projects.h"
+#include "projects.c"
 
 
 int main(void)
@@ -18,20 +20,17 @@ int main(void)
 		"<ul id=\"project_tags\">",
 		"<ul id=\"project_gallery\">",
 	};
-	int tagsLength = LEN(template_tags);
 
-	printf("\n%d tags available.\n\n", tagsLength);
+	printf("\n%d tags available.\n\n", LEN(template_tags));
 
 
 	// Read each line in a file individually until EOF
 	printf("Matched tags:\n");
-	compareTagsInFile(inFile, tagsLength, BUFFER_SIZE, template_tags);
+	compareTagsInFile(inFile, LEN(template_tags), BUFFER_SIZE, template_tags);
 	printf("\n");
 
 
-	exploreDirectory(".");
-	cleanDirList();
+	generateProjects();
 
-
-	return 0;
+	return 1;
 }
