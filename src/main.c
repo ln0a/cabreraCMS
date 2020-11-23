@@ -32,5 +32,5 @@ int main(void)
 
 	generateProjects();
 
-	return 1;
+	return 0;
 }

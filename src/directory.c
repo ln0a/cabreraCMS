@@ -31,18 +31,18 @@ int exploreDirectory(char path[], int buffer, int n, char arr[buffer][n])
 
 	if (dir == NULL) {
 		printf("Could not open the current directory.");
-		return 0;
+		return 1;
 	}
 
 	int i = 0;
 	while ((item = readdir(dir)) != NULL) {
-		// Add directories to rootDirList array
+		// Add directories to array
 		strcpy(arr[i], item->d_name);
 		i++;
 	}
 
 	closedir(dir);
-	return 1;
+	return 0;
 }
 
 
@@ -70,12 +70,12 @@ int cleanDirList(int inLen, int ignoredLen, int outLen, int buffer,
 		}
 	}
 
-	return 1;
+	return 0;
 }
 
 
 // Search directory, generate project list array and clean
-int cleanDirectory(char path[], int buffer, int n, char dirListOut[buffer][n])
+int createCleanDirectory(char path[], int buffer, int n, char dirListOut[buffer][n])
 {
 	char dirListFull[BUFFER_SIZE][WORD_LENGTH];
 
@@ -83,5 +83,5 @@ int cleanDirectory(char path[], int buffer, int n, char dirListOut[buffer][n])
 	cleanDirList(LEN(dirListFull), LEN(ignoredItems), n, WORD_LENGTH,
 				 dirListFull, ignoredItems, dirListOut);
 
-	return 1;
+	return 0;
 }

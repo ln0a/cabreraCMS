@@ -1,6 +1,7 @@
 #ifndef MACRO_H
 #define MACRO_H
 
+
 #define BUFFER_SIZE 512
 #define LINE_SIZE 2048
 
@@ -11,5 +12,6 @@
 #define DIR_LEVELS 2
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
+
 
 #endif

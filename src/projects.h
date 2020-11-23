@@ -1,6 +1,7 @@
 #ifndef PROJECTS_H
 #define PROJECTS_H
 
+
 #include "macro.h"
 
 
@@ -23,6 +24,7 @@ struct project {
 struct project projectsArr[BUFFER_SIZE]; // Array of projects
 
 
+int createProject(int n, int index, char project[n]);
 int generateProjects(void);
 
 
