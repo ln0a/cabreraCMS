@@ -5,7 +5,6 @@
 #include "macro.h"
 #include "template.h"
 
-#define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
 
 // Returns the current line as a string

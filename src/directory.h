@@ -12,7 +12,8 @@ char ignoredItems[][WORD_LENGTH] = {
 	"templates",
 	"cabreraCMS",
 	".git",
-	".ccls-cache"
+	".ccls-cache",
+	".DS_Store"
 };
 
 int exploreDirectory(char path[], int buffer, int n, char arr[buffer][n]);

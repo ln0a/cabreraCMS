@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "macro.h"
+#include "strings.h"
+#include "strings.c"
 #include "template.h"
 #include "template.c"
 #include "directory.h"
