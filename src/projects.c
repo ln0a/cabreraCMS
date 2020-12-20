@@ -29,10 +29,13 @@ int create_project(int n, int index, char dirName[n])
 	// Create project tags
 	gen_project_tags(index);
 
+	printf("======================================================\n");
 
 	// Generate description
-	gen_description(index);
-
+	if (gen_description(index) != 1) {
+	} else {
+		printf("Description cannot be generated.\n");
+	}
 
 	// Print path, title, date and tags from project structure
 	printf("Path: %s\n", projectsArr[index].path);
@@ -41,9 +44,13 @@ int create_project(int n, int index, char dirName[n])
 		   projectsArr[index].date.y,
 		   projectsArr[index].date.m,
 		   projectsArr[index].date.d);
-	for (int i = 0; i < 3; i++)
-		printf("%s\n", projectsArr[index].tags[i]);
+	printf("Tags: ");
+	for (int i = 0; i < 3; i++) {
+		printf("%s ", projectsArr[index].tags[i]);
+	}
 	printf("\n");
+
+	printf("======================================================\n");
 
 
 	return 0;
