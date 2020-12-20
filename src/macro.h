@@ -5,9 +5,9 @@
 #define BUFFER_SIZE 512
 #define LINE_SIZE 2048
 
+#define WORD_LENGTH 256 // single word buffer
+#define PATH_LENGTH 512 // path buffer
 #define TEXT_LENGTH 32768 // long text buffer
-#define WORD_LENGTH 256
-#define PATH_LENGTH 512
 
 #define DIR_LEVELS 2
 

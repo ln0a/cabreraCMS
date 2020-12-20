@@ -5,31 +5,73 @@
 #include "macro.h"
 #include "strings.h"
 #include "directory.h"
+#include "tags.h"
+#include "content.h"
 
 
 // Turn directory into project structure using the global project structure array
-int createProject(int n, int index, char project[n])
+int create_project(int n, int index, char dirName[n])
 {
 	int dateComponentLength;
 
-	separateTitleFromDirName(n, index, project);
-	dateComponentLength = separateDateFromDirName(n, index, project);
 
-	splitDate(index, dateComponentLength, LEN(projectsArr[index].date.dateStr),
+	// Convert project directory name into title string and date component integers
+	get_title_from_dirname(n, index, dirName);
+	dateComponentLength = get_date_from_dirname(n, index, dirName);
+	split_date(index, dateComponentLength, LEN(projectsArr[index].date.dateStr),
 			  projectsArr[index].date.dateStr);
 
-	// Print date and title separated
-	printf("%10s %s\n", projectsArr[index].date.dateStr, projectsArr[index].title);
-	printf("%d ", projectsArr[index].date.y);
-	printf("%d ", projectsArr[index].date.m);
-	printf("%d\n\n", projectsArr[index].date.d);
+
+	// Create project path
+	set_project_path(index, n, dirName);
+
+
+	// Create project tags
+	gen_project_tags(index);
+
+
+	// Generate description
+	gen_description(index);
+
+
+	// Print path, title, date and tags from project structure
+	printf("Path: %s\n", projectsArr[index].path);
+	printf("Title: %s\n", projectsArr[index].title);
+	printf("Date: %d %d %d\n",
+		   projectsArr[index].date.y,
+		   projectsArr[index].date.m,
+		   projectsArr[index].date.d);
+	for (int i = 0; i < 3; i++)
+		printf("%s\n", projectsArr[index].tags[i]);
+	printf("\n");
+
+
+	return 0;
+}
+
+
+// Create project file path and returns path string
+int set_project_path(int index, int n, char dirName[n])
+{
+	char fullPath[PATH_LENGTH + 1];
+	char prefix[WORD_LENGTH + 1];
+	char suffix[WORD_LENGTH + 1];
+
+	strcpy(prefix, "projects/");
+	strcpy(suffix, "/");
+
+	strcat(fullPath, prefix);
+	strcat(fullPath, dirName);
+	strcat(fullPath, suffix);
+
+	strcpy(projectsArr[index].path, fullPath);
 
 	return 0;
 }
 
 
 // Separate title from project directory string
-int separateTitleFromDirName(int n, int index, char dirName[n])
+int get_title_from_dirname(int n, int index, char dirName[n])
 {
 	int start = 0;
 
@@ -53,7 +95,7 @@ int separateTitleFromDirName(int n, int index, char dirName[n])
 
 
 // Separate date from project directory string, returns count of date component
-int separateDateFromDirName(int n, int index, char dirName[n])
+int get_date_from_dirname(int n, int index, char dirName[n])
 {
 	int count = 1;
 	char separator = '-';
@@ -79,7 +121,7 @@ int separateDateFromDirName(int n, int index, char dirName[n])
 
 
 // Split date by '-' and convert to integer components
-int splitDate(int index, int components, int n, char dateString[n])
+int split_date(int index, int components, int n, char dateString[n])
 {
     char** tokens;
 
@@ -92,12 +134,11 @@ int splitDate(int index, int components, int n, char dateString[n])
 
 	// Split string by -
     tokens = str_split(date, '-');
-
     if (tokens) {
-        int i;
-
-        for (i = 0; *(tokens + i); i++) {
+        for (int i = 0; *(tokens + i); i++) {
             /* printf("date=[%s]\n", *(tokens + i)); */
+
+			// Copy strings into year, month and day
 			if (i == 0) {
 				strcpy(year, *(tokens + i));
 			}
@@ -135,7 +176,7 @@ int splitDate(int index, int components, int n, char dateString[n])
 
 
 // Create array of projects and return quantity of projects
-int generateProjects(void)
+int gen_projects(void)
 {
 	int quanity = 0;
 
@@ -143,17 +184,18 @@ int generateProjects(void)
 	char blank[LEN(projects)];
 	char path[PATH_LENGTH];
 
-	// Creates array of project title strings
+	// Creates array of directory name strings in the projects directory
 	strcpy(path, "projects/");
-	createCleanDirectory(path, WORD_LENGTH, LEN(projects), projects);
+	gen_clean_dir(path, WORD_LENGTH, LEN(projects), projects);
 
 	// Find quatity of projects
 	while (strcmp(projects[quanity], blank) != 0) {
 		quanity++;
 	}
 
+	// Generate each project structure with parsed data
 	for (int i = 0; i < quanity; i++) {
-		createProject(LEN(projects), i, projects[i]);
+		create_project(LEN(projects), i, projects[i]);
 	}
 
 	return quanity;

@@ -1,13 +1,5 @@
 #include <stdio.h>
-#include "macro.h"
-#include "strings.h"
-#include "strings.c"
-#include "template.h"
-#include "template.c"
-#include "directory.h"
-#include "directory.c"
-#include "projects.h"
-#include "projects.c"
+#include "main.h"
 
 
 int main(void)
@@ -28,11 +20,11 @@ int main(void)
 
 	// Read each line in a file individually until EOF
 	printf("Matched tags:\n");
-	compareTagsInFile(inFile, LEN(template_tags), BUFFER_SIZE, template_tags);
+	cmp_arr_in_file(inFile, LEN(template_tags), BUFFER_SIZE, template_tags);
 	printf("\n");
 
 
-	generateProjects();
+	gen_projects();
 
 	return 0;
 }

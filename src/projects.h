@@ -17,7 +17,7 @@ struct date {
 struct project {
 	// Content
 	char title[WORD_LENGTH + 1];
-	char text[TEXT_LENGTH + 1];
+	char text[BUFFER_SIZE][WORD_LENGTH + 1];
 	char visualContent[BUFFER_SIZE][PATH_LENGTH + 1];
 	char tags[BUFFER_SIZE][WORD_LENGTH + 1];
 
@@ -32,11 +32,12 @@ struct project {
 struct project projectsArr[BUFFER_SIZE]; // Array of projects
 
 
-int createProject(int n, int index, char project[n]);
-int separateTitleFromDirName(int n, int index, char dirName[n]);
-int separateDateFromDirName(int n, int index, char dirName[n]);
-int splitDate(int index, int components, int n, char longString[n]);
-int generateProjects(void);
+int create_project(int n, int index, char dirName[n]);
+int set_project_path(int index, int n, char dirName[n]);
+int get_title_from_dirname(int n, int index, char dirName[n]);
+int get_date_from_dirname(int n, int index, char dirName[n]);
+int split_date(int index, int components, int n, char longString[n]);
+int gen_projects(void);
 
 
 #endif

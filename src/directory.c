@@ -23,7 +23,7 @@
 
 
 // Explore directory structure and add to array
-int exploreDirectory(char path[], int buffer, int n, char arr[buffer][n])
+int explore_directory(char path[], int buffer, int n, char arr[buffer][n])
 {
 	struct dirent *item;
 
@@ -47,7 +47,7 @@ int exploreDirectory(char path[], int buffer, int n, char arr[buffer][n])
 
 
 // Remove ignored items from directory list
-int cleanDirList(int inLen, int ignoredLen, int outLen, int buffer,
+int clean_dir_list(int inLen, int ignoredLen, int outLen, int buffer,
 				 char arrIn[inLen][buffer],
 				 char arrIgnored[ignoredLen][buffer],
 				 char arrOut[outLen][buffer])
@@ -75,12 +75,12 @@ int cleanDirList(int inLen, int ignoredLen, int outLen, int buffer,
 
 
 // Search directory, generate project list array and clean
-int createCleanDirectory(char path[], int buffer, int n, char dirListOut[buffer][n])
+int gen_clean_dir(char path[], int buffer, int n, char dirListOut[buffer][n])
 {
 	char dirListFull[BUFFER_SIZE][WORD_LENGTH];
 
-	exploreDirectory(path, LEN(dirListFull), WORD_LENGTH, dirListFull);
-	cleanDirList(LEN(dirListFull), LEN(ignoredItems), n, WORD_LENGTH,
+	explore_directory(path, LEN(dirListFull), WORD_LENGTH, dirListFull);
+	clean_dir_list(LEN(dirListFull), LEN(ignoredItems), n, WORD_LENGTH,
 				 dirListFull, ignoredItems, dirListOut);
 
 	return 0;
