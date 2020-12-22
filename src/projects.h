@@ -17,7 +17,9 @@ struct date {
 struct project {
 	// Content
 	char title[WORD_LENGTH + 1];
-	char text[BUFFER_SIZE][WORD_LENGTH + 1];
+	char *text;
+	char *html;
+	char textSplit[BUFFER_SIZE][WORD_LENGTH + 1];
 	char visualContent[BUFFER_SIZE][PATH_LENGTH + 1];
 	char tags[BUFFER_SIZE][WORD_LENGTH + 1];
 

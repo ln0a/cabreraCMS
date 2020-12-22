@@ -7,6 +7,7 @@
 #include "projects.h"
 #include "directory.h"
 #include "strings.h"
+#include "markdown.h"
 
 
 // Reads description.txt for project description
@@ -50,17 +51,24 @@ int gen_description(int index)
 	fileCount = 1; // hacky reset to description.md
 
 	while (read_line(path[fileCount], i) != NULL) {
-		// copy string into project structure
 		strcat(line, read_line(path[fileCount], i));
 		i++;
 	}
 
-	// Split description text
-	split_description(index, LEN(line), line);
+	// Copy full description into project structure
+	projectsArr[index].text = line;
 
-	for (int i = 0; i < LEN(projectsArr[index].text[i]); i++)
-		printf("%s ", projectsArr[index].text[i]);
+	// Split description text NOT NEEDED
+	/* split_description(index, LEN(line), line); */
+
+	for (int i = 0; i < LEN(projectsArr[index].textSplit[i]); i++)
+		printf("%s ", projectsArr[index].textSplit[i]);
 	printf("\n");
+
+
+	// Convert md to html
+	md_to_html(index);
+
 
 	return 0;
 }
@@ -74,7 +82,7 @@ int split_description(int index, int n, char text[n])
 
 	if (tokens) {
 		for (int i = 0; *(tokens + i); i++) {
-			strcpy(projectsArr[index].text[i], *(tokens + i));
+			strcpy(projectsArr[index].textSplit[i], *(tokens + i));
 			free(*(tokens + i));
 		}
 
