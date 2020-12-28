@@ -13,7 +13,6 @@
 int md_to_html(int index)
 {
 	ProjectsArr[index].html = cmark_markdown_to_html(ProjectsArr[index].text, strlen(ProjectsArr[index].text), 0);
-	/* printf("%s", ProjectsArr[index].html); */
 
 	return 0;
 }

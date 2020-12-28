@@ -50,9 +50,10 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 					// copy global tags into output
 					for (int i = 0; i < globalTagNum; i++) {
+						strcat(outputHTML, "<li>");
 						strcat(outputHTML, globalTags[i]);
+						strcat(outputHTML, "</li>\n");
 					}
-					strcat(outputHTML, "\n");
 
 					break;
 

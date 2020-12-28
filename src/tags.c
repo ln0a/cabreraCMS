@@ -40,14 +40,18 @@ int gen_project_tags(int index)
 
 			// Loop though global tags to find duplicates
 			for (int j = 0; j < LEN(globalTags); j++) {
+				char tempTag[WORD_LENGTH];
+				strcpy(tempTag, *(tokens + i));
+				trim_whitespace(tempTag);
+
 				// A duplicate is found
-				if (strcmp(globalTags[j], *(tokens + i)) == 0) {
+				if (strcmp(globalTags[j], tempTag) == 0) {
 					duplicate = 1;
 				}
 			}
 
 			// If there are no duplicates then add tag
-			if (!duplicate) {
+			if (duplicate == 0) {
 				strcpy(globalTags[globalTagNum], *(tokens + i));
 				trim_whitespace(globalTags[globalTagNum]);
 				globalTagNum++;
