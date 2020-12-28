@@ -71,18 +71,19 @@ void trim_whitespace(char *str)
 }
 
 
-// Compare a specific line in file to tag, return 1 is match is found
+// Compare a specific line in file to tag, return index of item in array if match is found
+// and -1 if no match is found
 int cmp_str_to_arr(char line[], int tagsLength, int buffer, char tags[tagsLength][buffer])
 {
-	for (int i=0; i < tagsLength; i++) {
+	for (int i = 0; i < tagsLength; i++) {
 		// Compare strings
 		if (strcmp(line, tags[i]) == 0) {
-			printf("%s\n", line);
-			return 1;
+			/* printf("%d %s\n", i, line); */
+			return i;
 		}
 	}
 
-	return 0;
+	return -1;
 }
 
 
@@ -90,6 +91,7 @@ int cmp_str_to_arr(char line[], int tagsLength, int buffer, char tags[tagsLength
 void cmp_arr_in_file(char file[], int tagsLength, int buffer, char tags[tagsLength][buffer])
 {
 	int i = 0;
+	int cmp;
 
 	while (read_line(file, i) != NULL) {
 		char line[LINE_SIZE + 1] = {0};
@@ -97,6 +99,7 @@ void cmp_arr_in_file(char file[], int tagsLength, int buffer, char tags[tagsLeng
 		trim_whitespace(line);
 
 		cmp_str_to_arr(line, tagsLength, BUFFER_SIZE, tags);
+
 		i++;
 	}
 }

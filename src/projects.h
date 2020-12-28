@@ -3,6 +3,7 @@
 
 
 #include "macro.h"
+#include "content.h"
 
 
 // Date structure
@@ -14,14 +15,19 @@ struct date {
 };
 
 // Project structure
-struct project {
+struct Project {
 	// Content
 	char title[WORD_LENGTH + 1];
+
 	char *text;
 	char *html;
 	char textSplit[BUFFER_SIZE][WORD_LENGTH + 1];
-	char visualContent[BUFFER_SIZE][PATH_LENGTH + 1];
+
+	struct VisualContent VisualContentArr[BUFFER_SIZE];
+	int visualContentCount;
+
 	char tags[BUFFER_SIZE][WORD_LENGTH + 1];
+	int tagsCount;
 
 	// Meta-data
 	struct date date;
@@ -31,7 +37,8 @@ struct project {
 	char path[PATH_LENGTH + 1];
 };
 
-struct project projectsArr[BUFFER_SIZE]; // Array of projects
+struct Project ProjectsArr[BUFFER_SIZE]; // Array of projects
+int projectsCount = 0;
 
 
 int create_project(int n, int index, char dirName[n]);
@@ -39,6 +46,7 @@ int set_project_path(int index, int n, char dirName[n]);
 int get_title_from_dirname(int n, int index, char dirName[n]);
 int get_date_from_dirname(int n, int index, char dirName[n]);
 int split_date(int index, int components, int n, char longString[n]);
+void print_project_data(int index);
 int gen_projects(void);
 
 

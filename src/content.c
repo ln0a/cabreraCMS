@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "content.h"
+
 #include "macro.h"
 #include "file.h"
 #include "projects.h"
 #include "directory.h"
 #include "strings.h"
 #include "markdown.h"
+
+#include "content.h"
 
 
 // Reads description.txt for project description
@@ -18,12 +20,12 @@ int gen_description(int index)
 	char path[BUFFER_SIZE][PATH_LENGTH + 1];
 	// Initialise paths
 	for (int i = 0; i < LEN(path); i++) {
-		strcpy(path[i], projectsArr[index].path);
+		strcpy(path[i], ProjectsArr[index].path);
 	}
 
 	// check project directory for description text file
 	char dirContent[BUFFER_SIZE][WORD_LENGTH];
-	explore_directory(projectsArr[index].path, LEN(dirContent), WORD_LENGTH, dirContent);
+	explore_directory(ProjectsArr[index].path, LEN(dirContent), WORD_LENGTH, dirContent);
 	char textFileNames[4][WORD_LENGTH] = {{"description.md"}, {"description.txt"},
 										  {"text.md"}, {"text.txt"}};
 
@@ -50,39 +52,78 @@ int gen_description(int index)
 	char line[TEXT_LENGTH + 1] = {0};
 	fileCount = 1; // hacky reset to description.md
 
+	// Copy read file into line
 	while (read_line(path[fileCount], i) != NULL) {
 		strcat(line, read_line(path[fileCount], i));
 		i++;
 	}
 
-	// Copy full description into project structure
-	projectsArr[index].text = line;
-
-	// Split description text NOT NEEDED
-	/* split_description(index, LEN(line), line); */
-
-	for (int i = 0; i < LEN(projectsArr[index].textSplit[i]); i++)
-		printf("%s ", projectsArr[index].textSplit[i]);
-	printf("\n");
-
+	// Copy full description into project structures char*
+	ProjectsArr[index].text = line;
 
 	// Convert md to html
 	md_to_html(index);
-
 
 	return 0;
 }
 
 
-// Split description text into array of strings
-int split_description(int index, int n, char text[n])
+// Fill projects with file paths of images
+int gen_visual_content(int index)
+{
+	int count = 0;
+
+	char directoryContents[10][WORD_LENGTH] = {0};
+	gen_clean_dir(ProjectsArr[index].path,
+				  LEN(directoryContents), LEN(directoryContents[0]), directoryContents);
+
+	for (int i = 0; i < LEN(directoryContents); i++) {
+		// Copy full file name in project
+		strcpy(ProjectsArr[index].VisualContentArr[count].filename, directoryContents[i]);
+
+		char splitFilename[2][WORD_LENGTH] = {0};
+		split_filename(index, i, LEN(directoryContents[i]), directoryContents[i],
+					   LEN(splitFilename), LEN(splitFilename[i]), splitFilename);
+
+		// Check if format matches text files and skip
+		if (strcmp(splitFilename[1], "txt") == 0 ||
+			strcmp(splitFilename[1], "org") == 0 ||
+			strcmp(splitFilename[1], "html") == 0 ||
+			strcmp(splitFilename[1], "md") == 0
+			) {}
+		else {
+			// Check for image formats
+			if (strcmp(splitFilename[1], "jpg") == 0 ||
+				strcmp(splitFilename[1], "jpeg") == 0 ||
+				strcmp(splitFilename[1], "png") == 0 ||
+				strcmp(splitFilename[1], "gif") == 0
+				) {
+				// Copy split file and format into project
+				strcpy(ProjectsArr[index].VisualContentArr[count].file, splitFilename[0]);
+				strcpy(ProjectsArr[index].VisualContentArr[count].format, splitFilename[1]);
+
+				count++;
+			}
+		}
+	}
+
+	// Store the count of visual content into project
+	ProjectsArr[index].visualContentCount = count;
+
+	return 0;
+}
+
+
+// Split filename by '.'
+int split_filename(int index, int j, int m, char filename[m],
+				   int n, int buffer, char outArr[n][buffer])
 {
 	char** tokens;
-	tokens = str_split(text, ' ');
+	tokens = str_split(filename, '.');
 
 	if (tokens) {
 		for (int i = 0; *(tokens + i); i++) {
-			strcpy(projectsArr[index].textSplit[i], *(tokens + i));
+			strcpy(outArr[i], *(tokens + i));
 			free(*(tokens + i));
 		}
 

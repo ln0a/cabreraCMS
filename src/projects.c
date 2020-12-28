@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "projects.h"
+
 #include "macro.h"
 #include "strings.h"
 #include "directory.h"
 #include "tags.h"
 #include "content.h"
+
+#include "projects.h"
+
 
 
 // Turn directory into project structure using the global project structure array
@@ -18,18 +21,14 @@ int create_project(int n, int index, char dirName[n])
 	// Convert project directory name into title string and date component integers
 	get_title_from_dirname(n, index, dirName);
 	dateComponentLength = get_date_from_dirname(n, index, dirName);
-	split_date(index, dateComponentLength, LEN(projectsArr[index].date.dateStr),
-			  projectsArr[index].date.dateStr);
-
+	split_date(index, dateComponentLength, LEN(ProjectsArr[index].date.dateStr),
+			  ProjectsArr[index].date.dateStr);
 
 	// Create project path
 	set_project_path(index, n, dirName);
 
-
 	// Create project tags
 	gen_project_tags(index);
-
-	printf("======================================================\n");
 
 	// Generate description
 	if (gen_description(index) != 1) {
@@ -37,21 +36,13 @@ int create_project(int n, int index, char dirName[n])
 		printf("Description cannot be generated.\n");
 	}
 
-	// Print path, title, date and tags from project structure
-	printf("Path: %s\n", projectsArr[index].path);
-	printf("Title: %s\n", projectsArr[index].title);
-	printf("Date: %d %d %d\n",
-		   projectsArr[index].date.y,
-		   projectsArr[index].date.m,
-		   projectsArr[index].date.d);
-	printf("Tags: ");
-	for (int i = 0; i < 3; i++) {
-		printf("%s ", projectsArr[index].tags[i]);
-	}
-	printf("\n");
+	gen_visual_content(index);
 
-	printf("======================================================\n");
+	// Increment global projects count
+	projectsCount++;
 
+	// Print project data
+	print_project_data(index);
 
 	return 0;
 }
@@ -71,7 +62,7 @@ int set_project_path(int index, int n, char dirName[n])
 	strcat(fullPath, dirName);
 	strcat(fullPath, suffix);
 
-	strcpy(projectsArr[index].path, fullPath);
+	strcpy(ProjectsArr[index].path, fullPath);
 
 	return 0;
 }
@@ -94,7 +85,7 @@ int get_title_from_dirname(int n, int index, char dirName[n])
 	// Copy characters after end of date and separator into title structure
 	int i, j;
 	for (i = start+1, j = 0; i < n; i++, j++) {
-		projectsArr[index].title[j] = dirName[i];
+		ProjectsArr[index].title[j] = dirName[i];
 	}
 
 	return 0;
@@ -120,7 +111,7 @@ int get_date_from_dirname(int n, int index, char dirName[n])
 		}
 
 		// Add char to dateStr array in date structure
-		projectsArr[index].date.dateStr[i] = dirName[i];
+		ProjectsArr[index].date.dateStr[i] = dirName[i];
 	}
 
 	return count;
@@ -133,7 +124,7 @@ int split_date(int index, int components, int n, char dateString[n])
     char** tokens;
 
 	char date[n+1];
-	strcpy(date, projectsArr[index].date.dateStr);
+	strcpy(date, ProjectsArr[index].date.dateStr);
 
 	char year[4+1];
 	char month[2+1];
@@ -143,8 +134,6 @@ int split_date(int index, int components, int n, char dateString[n])
     tokens = str_split(date, '-');
     if (tokens) {
         for (int i = 0; *(tokens + i); i++) {
-            /* printf("date=[%s]\n", *(tokens + i)); */
-
 			// Copy strings into year, month and day
 			if (i == 0) {
 				strcpy(year, *(tokens + i));
@@ -165,20 +154,49 @@ int split_date(int index, int components, int n, char dateString[n])
 	// Convert date component string to integer based on length of date components
 	switch (components) {
 	case 1:
-		projectsArr[index].date.y = atoi(year);
+		ProjectsArr[index].date.y = atoi(year);
 		break;
 	case 2:
-		projectsArr[index].date.y = atoi(year);
-		projectsArr[index].date.m = atoi(month);
+		ProjectsArr[index].date.y = atoi(year);
+		ProjectsArr[index].date.m = atoi(month);
 		break;
 	case 3:
-		projectsArr[index].date.y = atoi(year);
-		projectsArr[index].date.m = atoi(month);
-		projectsArr[index].date.d = atoi(day);
+		ProjectsArr[index].date.y = atoi(year);
+		ProjectsArr[index].date.m = atoi(month);
+		ProjectsArr[index].date.d = atoi(day);
 		break;
 	}
 
 	return 0;
+}
+
+
+// Print the data of project to termial
+void print_project_data(int index)
+{
+	printf("Title: %s\n", ProjectsArr[index].title);
+
+	printf("Date: %d %d %d\n",
+		   ProjectsArr[index].date.y,
+		   ProjectsArr[index].date.m,
+		   ProjectsArr[index].date.d);
+
+	printf("Tags: ");
+	for (int i = 0; i < 3; i++) {
+		printf("%s ", ProjectsArr[index].tags[i]);
+	}
+	printf("\n");
+
+	printf("Path: %s\n", ProjectsArr[index].path);
+
+	printf("HTML Description:\n");
+	printf("%s", ProjectsArr[index].html);
+
+	printf("Visual Content:\n");
+	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++)
+		printf("%s\n", ProjectsArr[index].VisualContentArr[i].filename);
+
+	printf("\n\n");
 }
 
 

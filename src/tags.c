@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tags.h"
+
 #include "macro.h"
 #include "projects.h"
 #include "file.h"
 #include "strings.h"
+
+#include "tags.h"
 
 
 // Generate project tags
@@ -20,7 +22,7 @@ int gen_project_tags(int index)
 	char projectTags[10][WORD_LENGTH] = {0};
 
 	// Concatonate project path with tag file path
-	strcpy(path, projectsArr[index].path);
+	strcpy(path, ProjectsArr[index].path);
 	strcat(path, tagsFile);
 
 	// Read tags file and split tags by deliminator ','
@@ -32,8 +34,9 @@ int gen_project_tags(int index)
 			int duplicate = 0;
 
 			// Add tag to local project tags array
-			strcpy(projectsArr[index].tags[i], *(tokens + i));
-			trim_whitespace(projectsArr[index].tags[i]);
+			strcpy(ProjectsArr[index].tags[i], *(tokens + i));
+			trim_whitespace(ProjectsArr[index].tags[i]);
+			ProjectsArr[index].tagsCount++;
 
 			// Loop though global tags to find duplicates
 			for (int j = 0; j < LEN(globalTags); j++) {
