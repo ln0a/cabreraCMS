@@ -83,7 +83,7 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 		}
 		else {
-			// Concat line onto outputHTML
+			// Concat current line onto outputHTML
 			strcat(outputHTML, line);
 		}
 

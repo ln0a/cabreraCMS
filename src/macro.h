@@ -14,4 +14,12 @@
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
 
+extern char *optarg;
+
+char *defaultInputFile = "templates/index_template.html";
+char *defaultOutputFile = "templates/index_template.html";
+
+int verboseMode = 0;
+
+
 #endif

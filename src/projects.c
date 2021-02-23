@@ -41,8 +41,10 @@ int create_project(int n, int index, char dirName[n])
 	// Increment global projects count
 	projectsCount++;
 
-	// Print project data
-	print_project_data(index);
+	if (verboseMode == 1) {
+		// Print project data
+		print_project_data(index);
+	}
 
 	return 0;
 }

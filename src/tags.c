@@ -15,7 +15,7 @@ int gen_project_tags(int index)
 {
 	char** tokens;
 
-	char tagsFile[] = "tags.txt";
+	char tagsFile[] = "tags.md";
 	char path[PATH_LENGTH];
 
 	char tagsStr[LINE_SIZE];
