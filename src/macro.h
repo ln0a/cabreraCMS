@@ -17,7 +17,7 @@
 extern char *optarg;
 
 char *defaultInputFile = "templates/index_template.html";
-char *defaultOutputFile = "templates/index_template.html";
+char *defaultOutputFile = "out.html";
 
 int verboseMode = 0;
 

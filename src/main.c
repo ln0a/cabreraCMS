@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "macro.h"
 #include "main.h"
 
 
