@@ -1,10 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "macro.h"
 #include "file.h"
 #include "projects.h"
 #include "tags.h"
+#include "strings.h"
+#include "html.h"
 
 #include "template.h"
 
@@ -157,12 +160,39 @@ void index_template_tags(char template[])
 	int i = 0;
 	int cmp;
 
+	char *cmstag = "tag";
+	char** tokens;
+
 	// Loop through template file
 	while (read_line(template, i) != NULL) {
-		// Empty line on each loop
+		// Reset line string on each loop
 		char line[LINE_SIZE + 1] = {0};
+
 		strcpy(line, read_line(template, i));
 		trim_whitespace(line);
+
+
+		parse_html_tag(line);
+
+
+		/* // Split line by " */
+		/* tokens = str_split(line, ' '); */
+
+		/* if (tokens) { */
+		/* 	for (int j = 0; *(tokens + j); j++) { */
+		/* 		printf("%s\n", *(tokens + j)); */
+
+		/* 		/\* if (strcmp(*(tokens + j), cmstag) == 0) { *\/ */
+		/* 		/\* 	printf("%s\n", *(tokens + j)); *\/ */
+		/* 		/\* } *\/ */
+
+		/* 		free(*(tokens + j)); */
+		/* 	} */
+		/* 	free(tokens); */
+		/* } */
+
+		/* printf("\n"); */
+
 
 		// Returns index of item in array that matches string
 		cmp = cmp_str_to_arr(line, LEN(templateTags), BUFFER_SIZE, templateTags);

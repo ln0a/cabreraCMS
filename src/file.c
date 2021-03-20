@@ -71,6 +71,40 @@ void trim_whitespace(char *str)
 }
 
 
+// Trim the leading / trailing quotation makes on a string
+void trim_quotes(char *str)
+{
+    int index, i;
+
+	// Trim leading quote
+    index = 0;
+    while(str[index] == '"') {
+        index++;
+    }
+
+    // Shift all trailing characters to its left
+    i = 0;
+    while(str[i + index] != '\0') {
+        str[i] = str[i + index];
+        i++;
+    }
+    str[i] = '\0'; // Terminate string with NULL
+
+	// Trim trailing white spaces
+    i = 0;
+    index = -1;
+    while(str[i] != '\0') {
+        if(str[i] != '"') {
+            index = i;
+        }
+        i++;
+    }
+
+    // Mark the next character to last non white space character as NULL
+    str[index + 1] = '\0';
+}
+
+
 // Compare a specific line in file to tag, return index of item in array if match is found
 // and -1 if no match is found
 int cmp_str_to_arr(char line[], int tagsLength, int buffer, char tags[tagsLength][buffer])

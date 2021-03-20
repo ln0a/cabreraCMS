@@ -7,7 +7,7 @@
 
 
 // Date structure
-struct date {
+struct Date {
 	char dateStr[10];
 	int y;
 	int m;
@@ -30,7 +30,7 @@ struct Project {
 	int tagsCount;
 
 	// Meta-data
-	struct date date;
+	struct Date date;
 	char location[WORD_LENGTH + 1];
 
 	// Accessibility

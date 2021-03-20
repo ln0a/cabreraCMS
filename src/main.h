@@ -26,6 +26,8 @@
 
 #include "markdown.h"
 #include "markdown.c"
+#include "html.h"
+#include "html.c"
 
 
 #include "template.h"

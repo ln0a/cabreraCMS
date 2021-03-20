@@ -6,12 +6,12 @@
 
 
 char templateTags[][BUFFER_SIZE] = {
-	"<ul id=\"projects_container\">",
-	"<ul id=\"projects_tags\">",
-	"<li id=\"NAME_OF_PROJECT\" class=\"project\">",
-	"<ul id=\"project_tags\">",
-	"<ul id=\"project_text\">",
-	"<ul id=\"project_gallery\">",
+	"projects_container",
+	"projects_tags",
+	"project",
+	"project_tags",
+	"project_text",
+	"project_gallery",
 };
 int templateTagsIndex[LEN(templateTags)];
 
