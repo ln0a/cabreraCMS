@@ -14,12 +14,10 @@
 
 
 // Generate the output html file from template.html and project structs
-int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n],
-						   int o, int buffer, char templateTags[o][buffer])
+int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n])
 {
 	FILE *output;
 
-	/* char *outputHTML = "test1"; */
 	char outputHTML[TEXT_LENGTH] = {0};
 
 	// Open working files
@@ -29,24 +27,31 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 	int i = 0;
 	while (read_line(templatePath, i) != NULL) {
 		char line[LINE_SIZE] = {0};
-		char linecpy[LINE_SIZE] = {0};
 		strcpy(line, read_line(templatePath, i));
-		strcpy(linecpy, line);
+		trim_whitespace(line);
 
-		// Check if line matches a template tag
+		char *cmsTagString;
+		if (parse_html_tag(line, &cmsTagString) == 1) {
+		}
+		else {
+			cmsTagString = "";
+		}
+
+		// Check if line contains a template tag
 		int templateTagIndex;
-		trim_whitespace(linecpy);
-		templateTagIndex = cmp_str_to_arr(linecpy, o, buffer, templateTags);
+		templateTagIndex = cmp_str_to_arr(cmsTagString,
+										  LEN(templateTags), BUFFER_SIZE, templateTags);
+		/* printf("%d ", templateTagIndex); */
 
 		if (templateTagIndex != -1) {
 			switch (templateTagIndex) {
-				// <ul> projects_container
+				// projects_container
 				case 0:
 					// just copy line
 					strcat(outputHTML, line);
 					break;
 
-				// <ul> projects_tags
+				// projects_tags
 				case 1:
 					// copy line before tags
 					strcat(outputHTML, line);
@@ -60,8 +65,23 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 					break;
 
-				// <li> NAME_OF_PROJECT
+				// projects_gallery
 				case 2:
+					strcat(outputHTML, "<ul id=\"projects_gallery\">\n");
+
+					for (int i = 0; i < projectsCount; i++) {
+						char content[TEXT_LENGTH] = {0};
+
+						gen_html_gallery_item(i, LEN(content), content);
+						strcat(outputHTML, content);
+					}
+
+					strcat(outputHTML, "</ul>\n");
+
+					break;
+
+				// project
+				case 3:
 					// loop through all projects
 					for (int i = 0; i < projectsCount; i++) {
 						char content[TEXT_LENGTH] = {0};
@@ -108,8 +128,8 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 {
 	for (int i = 0; i < n; i++) {
 		switch (i) {
-			// <ul> project_tags
-			case 3:
+			// project_tags
+			case 4:
 				if (tagsIndex[i] == 1) {
 					strcat(output, "<ul id=\"project_tags\">\n");
 
@@ -124,7 +144,7 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 
 				break;
 
-			// <ul> project_text
+			// project_text
 			case 5:
 				if (tagsIndex[i] == 1) {
 					strcat(output, "<ul id=\"project_text\">\n");
@@ -133,16 +153,18 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 				}
 				break;
 
-			// <ul> project_gallery
-			case 4:
+			// project_gallery
+			case 6:
 				if (tagsIndex[i] == 1) {
 					strcat(output, "<ul id=\"project_gallery\">\n");
+
 					for (int j = 0; j < ProjectsArr[index].visualContentCount; j++) {
 						strcat(output, "<img src=\"");
 						strcat(output, ProjectsArr[index].path);
 						strcat(output, ProjectsArr[index].VisualContentArr[j].filename);
 						strcat(output, "\">\n");
 					}
+
 					strcat(output, "</ul>\n");
 				}
 				break;
@@ -153,15 +175,35 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 }
 
 
+int gen_html_gallery_item (int index, int buffer, char output[buffer])
+{
+	strcat(output, "<ul class=\"project_gallery\">\n");
+
+	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
+		strcat(output, "<img src=\"");
+
+		strcat(output, ProjectsArr[index].path);
+		strcat(output, "img/");
+		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
+
+		strcat(output, "\">\n");
+	}
+
+	strcat(output, "</ul>\n");
+
+	return 0;
+}
+
+
 // Loop through template file and declare if tag exists with 1 or 0
 // in templateTagsIndex global array
-void index_template_tags(char template[])
+void index_template_tags(char *template)
 {
 	int i = 0;
 	int cmp;
 
-	char *cmstag = "tag";
-	char** tokens;
+	char *cmsTagString = "test";
+	char **tokens;
 
 	// Loop through template file
 	while (read_line(template, i) != NULL) {
@@ -171,40 +213,30 @@ void index_template_tags(char template[])
 		strcpy(line, read_line(template, i));
 		trim_whitespace(line);
 
-
-		parse_html_tag(line);
-
-
-		/* // Split line by " */
-		/* tokens = str_split(line, ' '); */
-
-		/* if (tokens) { */
-		/* 	for (int j = 0; *(tokens + j); j++) { */
-		/* 		printf("%s\n", *(tokens + j)); */
-
-		/* 		/\* if (strcmp(*(tokens + j), cmstag) == 0) { *\/ */
-		/* 		/\* 	printf("%s\n", *(tokens + j)); *\/ */
-		/* 		/\* } *\/ */
-
-		/* 		free(*(tokens + j)); */
-		/* 	} */
-		/* 	free(tokens); */
-		/* } */
-
-		/* printf("\n"); */
-
+		if (parse_html_tag(line, &cmsTagString) == 1) {
+		}
+		else {
+			cmsTagString = "";
+		}
+		/* printf("%s\n", cmsTagString); */
 
 		// Returns index of item in array that matches string
-		cmp = cmp_str_to_arr(line, LEN(templateTags), BUFFER_SIZE, templateTags);
+		// -1 if not matched
+		cmp = cmp_str_to_arr(cmsTagString, LEN(templateTags), BUFFER_SIZE, templateTags);
 
 		// Loop through template tags
-		for (int i = 0; i < LEN(templateTagsIndex); i++) {
+		for (int j = 0; j < LEN(templateTagsIndex); j++) {
 			// index matches
-			if (cmp == i) {
-				templateTagsIndex[i] = 1;
+			if (cmp == j) {
+				templateTagsIndex[j] = 1;
 			}
 		}
 
 		i++;
 	}
+
+	/* for (int i = 0; i < LEN(templateTagsIndex); i++) { */
+	/* 	printf("%d ", templateTagsIndex[i]); */
+	/* } */
+	/* printf("%d\n", LEN(templateTagsIndex)); */
 }

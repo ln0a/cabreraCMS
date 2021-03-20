@@ -73,13 +73,18 @@ int gen_visual_content(int index)
 {
 	int count = 0;
 
-	char directoryContents[10][WORD_LENGTH] = {0};
-	gen_clean_dir(ProjectsArr[index].path,
+	char path[PATH_LENGTH] = {0};
+	strcat(path, ProjectsArr[index].path);
+	strcat(path, "img/");
+
+	char directoryContents[VISUAL_BUFFER][PATH_LENGTH] = {0};
+	gen_clean_dir(path,
 				  LEN(directoryContents), LEN(directoryContents[0]), directoryContents);
 
+
 	for (int i = 0; i < LEN(directoryContents); i++) {
-		// Copy full file name in project
-		strcpy(ProjectsArr[index].VisualContentArr[count].filename, directoryContents[i]);
+		char fullFilename[WORD_LENGTH];
+		strcpy(fullFilename, directoryContents[i]);
 
 		char splitFilename[2][WORD_LENGTH] = {0};
 		split_filename(index, i, LEN(directoryContents[i]), directoryContents[i],
@@ -98,9 +103,8 @@ int gen_visual_content(int index)
 				strcmp(splitFilename[1], "png") == 0 ||
 				strcmp(splitFilename[1], "gif") == 0
 				) {
-				// Copy split file and format into project
-				strcpy(ProjectsArr[index].VisualContentArr[count].file, splitFilename[0]);
-				strcpy(ProjectsArr[index].VisualContentArr[count].format, splitFilename[1]);
+				// Copy full file name in project
+				strcpy(ProjectsArr[index].VisualContentArr[count].filename, fullFilename);
 
 				count++;
 			}

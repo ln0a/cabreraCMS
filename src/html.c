@@ -12,7 +12,9 @@
 
 
 
-int parse_html_tag(char* element) {
+// Parses HTML tag to find cms tag
+// Returns 1 if match found and -1 if no match found
+int parse_html_tag(char* element, char **cmsTagString) {
 	struct HTML_Tag Tag;
 	Tag = EmptyTag;
 
@@ -29,16 +31,18 @@ int parse_html_tag(char* element) {
 			int tagMatch = parse_html_tag_attribute(Tag.attributes[i], &Tag.tagString);
 
 			if (tagMatch == 1) {
-				printf("success %s", Tag.tagString);
+				/* printf("success %s", Tag.tagString); */
+				*cmsTagString = Tag.tagString;
+				return 1;
 			}
 
 			/* printf(" %s ", Tag.attributes[i]); */
 		}
 
-		printf("\n");
+		/* printf("\n"); */
 	}
 
-	return 0;
+	return -1;
 }
 
 // Clean tag deliminators for HTML tag

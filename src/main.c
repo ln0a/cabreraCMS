@@ -50,8 +50,7 @@ int main(int argc, char *argv[])
 	gen_projects();
 
 	// Build html file from template file
-	gen_html_from_template(strlen(inputFile), inputFile, strlen(outputFile), outputFile,
-						   LEN(templateTags), BUFFER_SIZE, templateTags);
+	gen_html_from_template(strlen(inputFile), inputFile, strlen(outputFile), outputFile);
 
 
 	return 0;

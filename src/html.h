@@ -25,7 +25,7 @@ const char tagDelim[2] = {'<', '>'};
 const char tagClose = '/';
 
 
-int parse_html_tag(char* element);
+int parse_html_tag(char* element, char **cmsTagString);
 int clean_html_tag(int buffer, char string[buffer], char cleanString[buffer]);
 int parse_html_components(int buffer, int x,
 						  char input[buffer],

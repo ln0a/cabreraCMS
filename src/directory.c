@@ -77,7 +77,7 @@ int clean_dir_list(int inLen, int ignoredLen, int outLen, int buffer,
 // Search directory, generate project list array and clean
 int gen_clean_dir(char path[], int n, int buffer, char dirListOut[n][buffer])
 {
-	char dirListFull[BUFFER_SIZE][WORD_LENGTH];
+	char dirListFull[BUFFER_SIZE][WORD_LENGTH] = {0};
 
 	explore_directory(path, LEN(dirListFull), WORD_LENGTH, dirListFull);
 	clean_dir_list(LEN(dirListFull), LEN(ignoredItems), buffer, WORD_LENGTH,

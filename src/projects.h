@@ -3,7 +3,6 @@
 
 
 #include "macro.h"
-#include "content.h"
 
 
 // Date structure
@@ -12,6 +11,13 @@ struct Date {
 	int y;
 	int m;
 	int d;
+};
+
+// Visual Content structure
+struct VisualContent {
+	char filename[PATH_LENGTH]; // full filename with format
+	char file[PATH_LENGTH]; // just name
+	char format[WORD_LENGTH]; // just extension
 };
 
 // Project structure
