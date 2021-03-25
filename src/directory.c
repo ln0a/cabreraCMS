@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
-#include "directory.h"
+
 #include "macro.h"
+
+#include "directory.h"
+
 
 /*********************************************\
 
@@ -35,14 +39,32 @@ int explore_directory(char path[], int n, int buffer, char arr[n][buffer])
 	}
 
 	int i = 0;
-	while ((item = readdir(dir)) != NULL) {
+	while ((item = readdir(dir)) != NULL && i < n) {
 		// Add directories to array
 		strcpy(arr[i], item->d_name);
 		i++;
 	}
 
 	closedir(dir);
+
+	if (i > 1) {
+		qsort(arr, i, sizeof(arr[0]), compare_pointers);
+	}
+
+
 	return 0;
+}
+
+
+static int compare_pointers(const void *p, const void *q)
+{
+	const char *l = p;
+	const char *r = q;
+	int cmp;
+
+	cmp = strcmp(l, r);
+
+	return cmp;
 }
 
 

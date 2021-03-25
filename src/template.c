@@ -41,20 +41,37 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 		int templateTagIndex;
 		templateTagIndex = cmp_str_to_arr(cmsTagString,
 										  LEN(templateTags), BUFFER_SIZE, templateTags);
-		/* printf("%d ", templateTagIndex); */
 
 		if (templateTagIndex != -1) {
 			switch (templateTagIndex) {
-				// projects_container
+				// projects_index
 				case 0:
-					// just copy line
-					strcat(outputHTML, line);
+					strcat(outputHTML, "<ul class=\"projects_index\">\n");
+
+					for (int i = projectsCount - 1; i > 0; i--) {
+						/* printf("%s %s\n", ProjectsArr[i].date.dateStr, ProjectsArr[i].title); */
+
+						strcat(outputHTML, "<ul class=\"project_item\">\n");
+
+						strcat(outputHTML, "<li class=\"title\">");
+						strcat(outputHTML, ProjectsArr[i].title);
+						strcat(outputHTML, "</li>\n");
+
+						strcat(outputHTML, "<li class=\"date\">");
+						strcat(outputHTML, ProjectsArr[i].date.dateStr);
+						strcat(outputHTML, "</li>\n");
+
+						strcat(outputHTML, "</ul>\n");
+
+					}
+
+					strcat(outputHTML, "</ul>\n");
+
 					break;
 
 				// projects_tags
 				case 1:
-					// copy line before tags
-					strcat(outputHTML, line);
+					strcat(outputHTML, "<ul class=\"projects_tags\">\n");
 
 					// copy global tags into output
 					for (int i = 0; i < globalTagNum; i++) {
@@ -63,11 +80,13 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, "</li>\n");
 					}
 
+					strcat(outputHTML, "</ul>");
+
 					break;
 
 				// projects_gallery
 				case 2:
-					strcat(outputHTML, "<ul id=\"projects_gallery\">\n");
+					strcat(outputHTML, "<ul class=\"projects_gallery\">\n");
 
 					for (int i = 0; i < projectsCount; i++) {
 						char content[TEXT_LENGTH] = {0};
@@ -131,7 +150,7 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 			// project_tags
 			case 4:
 				if (tagsIndex[i] == 1) {
-					strcat(output, "<ul id=\"project_tags\">\n");
+					strcat(output, "<ul class=\"project_tags\">\n");
 
 					for (int j = 0; j < ProjectsArr[index].tagsCount; j++) {
 						strcat(output, "<li>");
@@ -147,7 +166,7 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 			// project_text
 			case 5:
 				if (tagsIndex[i] == 1) {
-					strcat(output, "<ul id=\"project_text\">\n");
+					strcat(output, "<ul class=\"project_text\">\n");
 					strcat(output, ProjectsArr[index].html);
 					strcat(output, "</ul>\n");
 				}
@@ -177,7 +196,10 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 
 int gen_html_gallery_item (int index, int buffer, char output[buffer])
 {
-	strcat(output, "<ul class=\"project_gallery\">\n");
+
+	strcat(output, "<ul id=\"");
+	strcat(output, ProjectsArr[index].title);
+	strcat(output, "-gallery\" class=\"project_gallery\">\n");
 
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
 		strcat(output, "<img src=\"");
@@ -202,7 +224,7 @@ void index_template_tags(char *template)
 	int i = 0;
 	int cmp;
 
-	char *cmsTagString = "test";
+	char *cmsTagString = "";
 	char **tokens;
 
 	// Loop through template file

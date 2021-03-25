@@ -6,7 +6,7 @@
 
 
 char templateTags[][BUFFER_SIZE] = {
-	"projects_container",
+	"projects_index",
 	"projects_tags",
 	"projects_gallery",
 	"project",
