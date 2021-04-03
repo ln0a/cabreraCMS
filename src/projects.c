@@ -24,7 +24,9 @@ int create_project(int n, int index, char dirName[n])
 	split_date(index, dateComponentLength, LEN(ProjectsArr[index].date.dateStr),
 			  ProjectsArr[index].date.dateStr);
 
-	hyphenate_title(ProjectsArr[index].title);
+	// Hyphenate title for use in IDs
+	strcpy(ProjectsArr[index].hyphenatedTitle, ProjectsArr[index].title);
+	hyphenate_title(ProjectsArr[index].hyphenatedTitle);
 
 	// Create project path
 	set_project_path(index, n, dirName);
