@@ -24,6 +24,7 @@ struct VisualContent {
 struct Project {
 	// Content
 	char title[WORD_LENGTH + 1];
+	char hyphenatedTitle[WORD_LENGTH + 1];
 
 	char *text;
 	char *html;
@@ -50,6 +51,7 @@ int projectsCount = 0;
 int create_project(int n, int index, char dirName[n]);
 int set_project_path(int index, int n, char dirName[n]);
 int get_title_from_dirname(int n, int index, char dirName[n]);
+void hyphenate_title(char *title);
 int get_date_from_dirname(int n, int index, char dirName[n]);
 int split_date(int index, int components, int n, char longString[n]);
 void print_project_data(int index);

@@ -24,6 +24,8 @@ int create_project(int n, int index, char dirName[n])
 	split_date(index, dateComponentLength, LEN(ProjectsArr[index].date.dateStr),
 			  ProjectsArr[index].date.dateStr);
 
+	hyphenate_title(ProjectsArr[index].title);
+
 	// Create project path
 	set_project_path(index, n, dirName);
 
@@ -91,6 +93,19 @@ int get_title_from_dirname(int n, int index, char dirName[n])
 	}
 
 	return 0;
+}
+
+
+// Hypenate title if multiple words
+void hyphenate_title(char *title)
+{
+	int i = 0;
+	while (title[i] != '\0') {
+		if (title[i] == ' ') {
+			title[i] = '-';
+		}
+		i++;
+	}
 }
 
 

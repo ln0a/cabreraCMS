@@ -31,6 +31,7 @@ int parse_html_components(int buffer, int x,
 						  char input[buffer],
 						  char id[buffer],char components[x][buffer]);
 int parse_html_tag_attribute(char *attr, char **tagString);
+int tidy_html(char *input, char *output);
 
 
 #endif

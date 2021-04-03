@@ -53,5 +53,6 @@ int main(int argc, char *argv[])
 	gen_html_from_template(strlen(inputFile), inputFile, strlen(outputFile), outputFile);
 
 
+
 	return 0;
 }

@@ -51,7 +51,10 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 					for (int i = projectsCount - 1; i > 0; i--) {
 						/* printf("%s %s\n", ProjectsArr[i].date.dateStr, ProjectsArr[i].title); */
 
-						strcat(outputHTML, "<ul class=\"project_item\">\n");
+						strcat(outputHTML, "<ul id=\"");
+						strcat(outputHTML, ProjectsArr[i].title);
+						strcat(outputHTML, "\" class=\"project_item\">\n");
+						/* strcat(outputHTML, "<ul class=\"project_item\">\n"); */
 
 						strcat(outputHTML, "<li class=\"title\">");
 						strcat(outputHTML, ProjectsArr[i].title);
@@ -132,6 +135,8 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 		i++;
 	}
 
+	/* tidy_html(outputHTML, outputPath); */
+
 	// Copy outputHTML into output file
 	fprintf(output, "%s", outputHTML);
 
@@ -199,7 +204,7 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 
 	strcat(output, "<ul id=\"");
 	strcat(output, ProjectsArr[index].title);
-	strcat(output, "-gallery\" class=\"project_gallery\">\n");
+	strcat(output, "\" class=\"project_gallery\">\n");
 
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
 		strcat(output, "<img src=\"");
