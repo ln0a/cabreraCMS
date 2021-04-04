@@ -10,9 +10,9 @@
 
 
 // Convert markdown formatted text to html
-int md_to_html(int index)
+int md_to_html(char *input, int inputLen, char **output)
 {
-	ProjectsArr[index].html = cmark_markdown_to_html(ProjectsArr[index].text, strlen(ProjectsArr[index].text), 0);
+	*output = cmark_markdown_to_html(input, strlen(input), 0);
 
 	return 0;
 }

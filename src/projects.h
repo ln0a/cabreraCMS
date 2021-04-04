@@ -27,7 +27,9 @@ struct Project {
 	char hyphenatedTitle[WORD_LENGTH + 1];
 
 	char *text;
-	char *html;
+	char *textHTML;
+	char *data;
+	char *dataHTML;
 	char textSplit[BUFFER_SIZE][WORD_LENGTH + 1];
 
 	struct VisualContent VisualContentArr[BUFFER_SIZE];

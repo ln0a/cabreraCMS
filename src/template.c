@@ -172,7 +172,15 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 			case 5:
 				if (tagsIndex[i] == 1) {
 					strcat(output, "<ul class=\"project_text\">\n");
-					strcat(output, ProjectsArr[index].html);
+
+					strcat(output, "<div class=\"description\">\n");
+					strcat(output, ProjectsArr[index].textHTML);
+					strcat(output, "</div>\n");
+
+					strcat(output, "<ul class=\"data\">\n");
+					strcat(output, ProjectsArr[index].dataHTML);
+					strcat(output, "</ul>\n");
+
 					strcat(output, "</ul>\n");
 				}
 				break;
@@ -207,13 +215,17 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 	strcat(output, "\" class=\"project_gallery\">\n");
 
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
-		strcat(output, "<img src=\"");
+		strcat(output, "<li class=\"image_wrapper\">\n");
 
+		strcat(output, "<img src=\"");
 		strcat(output, ProjectsArr[index].path);
 		strcat(output, "img/");
 		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
-
 		strcat(output, "\">\n");
+
+		strcat(output, "<p></p>\n");
+
+		strcat(output, "</li>\n");
 	}
 
 	strcat(output, "</ul>\n");

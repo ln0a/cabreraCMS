@@ -40,6 +40,12 @@ int create_project(int n, int index, char dirName[n])
 		printf("Description cannot be generated.\n");
 	}
 
+	// Generate data
+	if (gen_data(index) != 1) {
+	} else {
+		printf("Data cannot be generated.\n");
+	}
+
 	gen_visual_content(index);
 
 	// Increment global projects count
@@ -209,7 +215,7 @@ void print_project_data(int index)
 	printf("Path: %s\n", ProjectsArr[index].path);
 
 	printf("HTML Description:\n");
-	printf("%s", ProjectsArr[index].html);
+	printf("%s", ProjectsArr[index].textHTML);
 
 	printf("Visual Content:\n");
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++)
