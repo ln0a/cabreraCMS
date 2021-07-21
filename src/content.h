@@ -10,6 +10,7 @@ int gen_data(int index);
 int gen_visual_content(int index);
 int split_filename(int index, int j, int m, char filename[m],
 				   int n, int buffer, char outArr[n][buffer]);
+int gen_contact();
 
 
 #endif

@@ -12,7 +12,7 @@
 #include "content.h"
 
 
-// Reads description.txt for project description
+// Reads description.md for project description
 int gen_description(int index)
 {
 	// create description.txt path
@@ -156,12 +156,14 @@ int gen_visual_content(int index)
 		else {
 			// Check for image formats
 			if (strcmp(splitFilename[1], "jpg") == 0 ||
+				strcmp(splitFilename[1], "JPG") == 0 ||
 				strcmp(splitFilename[1], "jpeg") == 0 ||
 				strcmp(splitFilename[1], "png") == 0 ||
 				strcmp(splitFilename[1], "gif") == 0
 				) {
 				// Copy full file name in project
 				strcpy(ProjectsArr[index].VisualContentArr[count].filename, fullFilename);
+				strcpy(ProjectsArr[index].VisualContentArr[count].file, splitFilename[0]);
 
 				count++;
 			}
@@ -191,5 +193,11 @@ int split_filename(int index, int j, int m, char filename[m],
 		free(tokens);
 	}
 
+	return 0;
+}
+
+
+int gen_contact()
+{
 	return 0;
 }

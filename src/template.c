@@ -51,10 +51,11 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 					for (int i = projectsCount - 1; i > 0; i--) {
 						/* printf("%s %s\n", ProjectsArr[i].date.dateStr, ProjectsArr[i].title); */
 
-						strcat(outputHTML, "<ul id=\"");
+						strcat(outputHTML, "<a id=\"");
 						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
-						strcat(outputHTML, "\" class=\"project_item\">\n");
-						/* strcat(outputHTML, "<ul class=\"project_item\">\n"); */
+						strcat(outputHTML, "\" class=\"project_item\" href=\"#");
+						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
+						strcat(outputHTML, "\">\n");
 
 						strcat(outputHTML, "<li class=\"title\">");
 						strcat(outputHTML, ProjectsArr[i].title);
@@ -64,7 +65,7 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, ProjectsArr[i].date.dateStr);
 						strcat(outputHTML, "</li>\n");
 
-						strcat(outputHTML, "</ul>\n");
+						strcat(outputHTML, "</a>\n");
 
 					}
 
@@ -135,7 +136,6 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 		i++;
 	}
 
-	/* tidy_html(outputHTML, outputPath); */
 
 	// Copy outputHTML into output file
 	fprintf(output, "%s", outputHTML);
@@ -191,7 +191,7 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 					strcat(output, "<ul id=\"project_gallery\">\n");
 
 					for (int j = 0; j < ProjectsArr[index].visualContentCount; j++) {
-						strcat(output, "<img src=\"");
+						strcat(output, "<img class=\"lazy\" data-src=\"");
 						strcat(output, ProjectsArr[index].path);
 						strcat(output, ProjectsArr[index].VisualContentArr[j].filename);
 						strcat(output, "\">\n");
@@ -215,9 +215,11 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 	strcat(output, "\" class=\"project_gallery\">\n");
 
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
-		strcat(output, "<li class=\"image_wrapper\">\n");
+		strcat(output, "<li id=\"");
+		strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+		strcat(output, "\" class=\"image_wrapper\">\n");
 
-		strcat(output, "<img src=\"");
+		strcat(output, "<img class=\"lazy\" data-src=\"");
 		strcat(output, ProjectsArr[index].path);
 		strcat(output, "img/");
 		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);

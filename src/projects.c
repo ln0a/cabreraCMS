@@ -238,6 +238,7 @@ int gen_projects(void)
 	strcpy(path, "projects/");
 	gen_clean_dir(path, WORD_LENGTH, LEN(projects), projects);
 
+
 	// Find quatity of projects
 	while (strcmp(projects[quanity], blank) != 0) {
 		quanity++;
