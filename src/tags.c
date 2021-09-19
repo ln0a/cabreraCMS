@@ -19,7 +19,7 @@ int gen_project_tags(int index)
 	char path[PATH_LENGTH];
 
 	char tagsStr[LINE_SIZE];
-	char projectTags[10][WORD_LENGTH] = {0};
+	char projectTags[100][WORD_LENGTH] = {0};
 
 	// Concatonate project path with tag file path
 	strcpy(path, ProjectsArr[index].path);

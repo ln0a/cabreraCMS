@@ -134,9 +134,8 @@ int gen_visual_content(int index)
 	strcat(path, ProjectsArr[index].path);
 	strcat(path, "img/");
 
-	char directoryContents[VISUAL_BUFFER][PATH_LENGTH] = {0};
-	gen_clean_dir(path,
-				  LEN(directoryContents), LEN(directoryContents[0]), directoryContents);
+	char directoryContents[VISUAL_BUFFER][WORD_LENGTH] = {0};
+	gen_clean_dir(path, LEN(directoryContents), LEN(directoryContents[0]), directoryContents);
 
 
 	for (int i = 0; i < LEN(directoryContents); i++) {
@@ -165,6 +164,7 @@ int gen_visual_content(int index)
 				strcpy(ProjectsArr[index].VisualContentArr[count].filename, fullFilename);
 				strcpy(ProjectsArr[index].VisualContentArr[count].file, splitFilename[0]);
 
+
 				count++;
 			}
 		}
@@ -172,6 +172,14 @@ int gen_visual_content(int index)
 
 	// Store the count of visual content into project
 	ProjectsArr[index].visualContentCount = count;
+
+	if (count > 0) {
+		for (int i=0; i < count; i++) {
+			printf("File read:   %s\n", directoryContents[i]);
+			/* printf("File copied: %s\n", ProjectsArr[index].VisualContentArr[count].filename); */
+		}
+		printf("Count:    %d\n\n", ProjectsArr[index].visualContentCount);
+	}
 
 	return 0;
 }
