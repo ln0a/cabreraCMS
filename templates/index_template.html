@@ -7,17 +7,31 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
 		<link rel="stylesheet" type="text/css" href="css/media-query.css" media="screen">
 
-		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+		<!-- <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script> -->
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body>
 		<header>
-			<h1>STUDIO PRINCE</h1>
+			<h1 id="STUDIO_PRINCE">STUDIO PRINCE</h1>
 			<ul tag="projects_tags"></ul>
 		</header>
 
 		<div id="content_wrapper">
-			<ul tag="projects_index"></ul>
+			<div id="maximised_img_container">
+				<div class="top"></div>
+				<div class="left"></div>
+				<div class="middle"></div>
+				<div class="right"></div>
+			</div>
+
+			<div id="left">
+				<div id="line-through"></div>
+				<ul tag="projects_index"></ul>
+				<li id="copyright">©2021 Prince Concepts</li>
+			</div>
 
 			<div id="handle">
 				<div id="line"></div>

@@ -8,7 +8,7 @@
 #define WORD_LENGTH 256 // single word buffer
 #define PATH_LENGTH 512 // path buffer
 #define TEXT_LENGTH 1000000 // long text buffer
-#define VISUAL_BUFFER 500 // max count of images
+#define VISUAL_BUFFER 200 // max count of images
 
 #define DIR_LEVELS 2
 

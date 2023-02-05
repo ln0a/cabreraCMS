@@ -1,0 +1,327 @@
+	.file	""
+	.text
+	.globl	defaultInputFile
+	.section .rdata,"dr"
+.LC0:
+	.ascii "templates/index_template.html\0"
+	.data
+	.align 8
+defaultInputFile:
+	.quad	.LC0
+	.globl	defaultOutputFile
+	.section .rdata,"dr"
+.LC1:
+	.ascii "out.html\0"
+	.data
+	.align 8
+defaultOutputFile:
+	.quad	.LC1
+	.globl	verboseMode
+	.bss
+	.align 4
+verboseMode:
+	.space 4
+	.globl	ignoredItems
+	.data
+	.align 32
+ignoredItems:
+	.ascii ".\0"
+	.space 254
+	.ascii "..\0"
+	.space 253
+	.ascii "src\0"
+	.space 252
+	.ascii "templates\0"
+	.space 246
+	.ascii "cabreraCMS\0"
+	.space 245
+	.ascii ".git\0"
+	.space 251
+	.ascii ".ccls-cache\0"
+	.space 244
+	.ascii ".DS_Store\0"
+	.space 246
+	.section .rdata,"dr"
+	.align 8
+.LC2:
+	.ascii "Could not open the current directory.\0"
+	.text
+	.globl	explore_directory
+	.def	explore_directory;	.scl	2;	.type	32;	.endef
+	.seh_proc	explore_directory
+explore_directory:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	pushq	%rbx
+	.seh_pushreg	%rbx
+	subq	$72, %rsp
+	.seh_stackalloc	72
+	leaq	128(%rsp), %rbp
+	.seh_setframe	%rbp, 128
+	.seh_endprologue
+	movq	%rcx, -32(%rbp)
+	movl	%edx, -24(%rbp)
+	movl	%r8d, -16(%rbp)
+	movq	%r9, -8(%rbp)
+	movl	-16(%rbp), %ebx
+	movslq	%ebx, %rax
+	subq	$1, %rax
+	movq	%rax, -80(%rbp)
+	movslq	%ebx, %rax
+	movq	%rax, %r10
+	movl	$0, %r11d
+	movq	-32(%rbp), %rcx
+	call	opendir
+	movq	%rax, -88(%rbp)
+	cmpq	$0, -88(%rbp)
+	jne	.L2
+	leaq	.LC2(%rip), %rcx
+	call	printf
+	movl	$1, %eax
+	jmp	.L3
+.L2:
+	movl	$0, -68(%rbp)
+	jmp	.L4
+.L6:
+	movq	-96(%rbp), %rax
+	leaq	24(%rax), %rdx
+	movl	-68(%rbp), %eax
+	movslq	%eax, %rcx
+	movslq	%ebx, %rax
+	imulq	%rax, %rcx
+	movq	-8(%rbp), %rax
+	addq	%rcx, %rax
+	movq	%rax, %rcx
+	call	strcpy
+	addl	$1, -68(%rbp)
+.L4:
+	movq	-88(%rbp), %rax
+	movq	%rax, %rcx
+	call	readdir
+	movq	%rax, -96(%rbp)
+	cmpq	$0, -96(%rbp)
+	je	.L5
+	movl	-68(%rbp), %eax
+	cmpl	-24(%rbp), %eax
+	jl	.L6
+.L5:
+	movq	-88(%rbp), %rax
+	movq	%rax, %rcx
+	call	closedir
+	cmpl	$1, -68(%rbp)
+	jle	.L7
+	movslq	%ebx, %rcx
+	movl	-68(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-8(%rbp), %rax
+	leaq	compare_pointers(%rip), %r9
+	movq	%rcx, %r8
+	movq	%rax, %rcx
+	call	qsort
+.L7:
+	movl	$0, %eax
+.L3:
+	addq	$72, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+	.seh_endproc
+	.def	compare_pointers;	.scl	3;	.type	32;	.endef
+	.seh_proc	compare_pointers
+compare_pointers:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$64, %rsp
+	.seh_stackalloc	64
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	16(%rbp), %rax
+	movq	%rax, -8(%rbp)
+	movq	24(%rbp), %rax
+	movq	%rax, -16(%rbp)
+	movq	-16(%rbp), %rdx
+	movq	-8(%rbp), %rax
+	movq	%rax, %rcx
+	call	strcmp
+	movl	%eax, -20(%rbp)
+	movl	-20(%rbp), %eax
+	addq	$64, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	clean_dir_list
+	.def	clean_dir_list;	.scl	2;	.type	32;	.endef
+	.seh_proc	clean_dir_list
+clean_dir_list:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	pushq	%r13
+	.seh_pushreg	%r13
+	pushq	%r12
+	.seh_pushreg	%r12
+	pushq	%rdi
+	.seh_pushreg	%rdi
+	pushq	%rsi
+	.seh_pushreg	%rsi
+	pushq	%rbx
+	.seh_pushreg	%rbx
+	subq	$88, %rsp
+	.seh_stackalloc	88
+	leaq	128(%rsp), %rbp
+	.seh_setframe	%rbp, 128
+	.seh_endprologue
+	movl	%ecx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	%r8d, 32(%rbp)
+	movl	%r9d, 40(%rbp)
+	movl	40(%rbp), %ebx
+	movslq	%ebx, %rax
+	subq	$1, %rax
+	movq	%rax, -72(%rbp)
+	movslq	%ebx, %rax
+	movq	%rax, %rsi
+	movl	$0, %edi
+	movl	40(%rbp), %esi
+	movslq	%esi, %rax
+	subq	$1, %rax
+	movq	%rax, -80(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, %r12
+	movl	$0, %r13d
+	movl	40(%rbp), %edi
+	movslq	%edi, %rax
+	subq	$1, %rax
+	movq	%rax, -88(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, %r10
+	movl	$0, %r11d
+	movl	$0, -60(%rbp)
+	movl	$0, -56(%rbp)
+	jmp	.L11
+.L16:
+	movl	$0, -64(%rbp)
+	movl	$0, -52(%rbp)
+	jmp	.L12
+.L14:
+	movl	-52(%rbp), %eax
+	movslq	%eax, %rdx
+	movslq	%esi, %rax
+	imulq	%rax, %rdx
+	movq	56(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-56(%rbp), %eax
+	movslq	%eax, %rcx
+	movslq	%ebx, %rax
+	imulq	%rax, %rcx
+	movq	48(%rbp), %rax
+	addq	%rcx, %rax
+	movq	%rax, %rcx
+	call	strcmp
+	testl	%eax, %eax
+	je	.L13
+	addl	$1, -64(%rbp)
+.L13:
+	addl	$1, -52(%rbp)
+.L12:
+	movl	-52(%rbp), %eax
+	cmpl	24(%rbp), %eax
+	jl	.L14
+	movl	-64(%rbp), %eax
+	cmpl	24(%rbp), %eax
+	jne	.L15
+	movl	-56(%rbp), %eax
+	movslq	%eax, %rdx
+	movslq	%ebx, %rax
+	imulq	%rax, %rdx
+	movq	48(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-60(%rbp), %eax
+	movslq	%eax, %rcx
+	movslq	%edi, %rax
+	imulq	%rax, %rcx
+	movq	64(%rbp), %rax
+	addq	%rcx, %rax
+	movq	%rax, %rcx
+	call	strcpy
+	addl	$1, -60(%rbp)
+.L15:
+	addl	$1, -56(%rbp)
+.L11:
+	movl	-56(%rbp), %eax
+	cmpl	16(%rbp), %eax
+	jl	.L16
+	movl	$0, %eax
+	addq	$88, %rsp
+	popq	%rbx
+	popq	%rsi
+	popq	%rdi
+	popq	%r12
+	popq	%r13
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	gen_clean_dir
+	.def	gen_clean_dir;	.scl	2;	.type	32;	.endef
+	.seh_proc	gen_clean_dir
+gen_clean_dir:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movl	$131152, %eax
+	call	___chkstk_ms
+	subq	%rax, %rsp
+	.seh_stackalloc	131152
+	leaq	128(%rsp), %rbp
+	.seh_setframe	%rbp, 128
+	.seh_endprologue
+	movq	%rcx, 131040(%rbp)
+	movl	%edx, 131048(%rbp)
+	movl	%r8d, 131056(%rbp)
+	movq	%r9, 131064(%rbp)
+	movl	131056(%rbp), %eax
+	movslq	%eax, %rdx
+	subq	$1, %rdx
+	movq	%rdx, 131016(%rbp)
+	cltq
+	movq	%rax, %r10
+	movl	$0, %r11d
+	leaq	-64(%rbp), %rax
+	movl	$131072, %edx
+	movq	%rdx, %r8
+	movl	$0, %edx
+	movq	%rax, %rcx
+	call	memset
+	leaq	-64(%rbp), %rax
+	movq	%rax, %r9
+	movl	$256, %r8d
+	movl	$512, %edx
+	movq	131040(%rbp), %rcx
+	call	explore_directory
+	movl	131056(%rbp), %edx
+	movq	131064(%rbp), %rax
+	movq	%rax, 48(%rsp)
+	leaq	ignoredItems(%rip), %rax
+	movq	%rax, 40(%rsp)
+	leaq	-64(%rbp), %rax
+	movq	%rax, 32(%rsp)
+	movl	$256, %r9d
+	movl	%edx, %r8d
+	movl	$8, %edx
+	movl	$512, %ecx
+	call	clean_dir_list
+	movl	$0, %eax
+	addq	$131152, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (GNU) 10.2.0"
+	.def	opendir;	.scl	2;	.type	32;	.endef
+	.def	printf;	.scl	2;	.type	32;	.endef
+	.def	strcpy;	.scl	2;	.type	32;	.endef
+	.def	readdir;	.scl	2;	.type	32;	.endef
+	.def	closedir;	.scl	2;	.type	32;	.endef
+	.def	qsort;	.scl	2;	.type	32;	.endef
+	.def	strcmp;	.scl	2;	.type	32;	.endef
+	.def	memset;	.scl	2;	.type	32;	.endef
