@@ -80,7 +80,9 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 					// copy global tags into output
 					for (int i = 0; i < globalTagNum; i++) {
-						strcat(outputHTML, "<li>");
+						strcat(outputHTML, "<li project-tag=\"");
+						strcat(outputHTML, globalTagsHyphenated[i]);
+						strcat(outputHTML, "\">");
 						strcat(outputHTML, globalTags[i]);
 						strcat(outputHTML, "</li>\n");
 					}
@@ -188,7 +190,9 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 					strcat(output, "<ul class=\"project_tags\">\n");
 
 					for (int j = 0; j < ProjectsArr[index].tagsCount; j++) {
-						strcat(output, "<li>");
+						strcat(output, "<li project-tag=\"");
+						strcat(output, ProjectsArr[index].tagsHyphenated[j]);
+						strcat(output, "\">");
 						strcat(output, ProjectsArr[index].tags[j]);
 						strcat(output, "</li>\n");
 					}

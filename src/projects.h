@@ -36,6 +36,7 @@ struct Project {
 	int visualContentCount;
 
 	char tags[BUFFER_SIZE][WORD_LENGTH + 1];
+	char tagsHyphenated[BUFFER_SIZE][WORD_LENGTH + 1];
 	int tagsCount;
 
 	// Meta-data

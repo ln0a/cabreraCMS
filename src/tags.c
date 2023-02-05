@@ -36,6 +36,9 @@ int gen_project_tags(int index)
 			// Add tag to local project tags array
 			strcpy(ProjectsArr[index].tags[i], *(tokens + i));
 			trim_whitespace(ProjectsArr[index].tags[i]);
+
+			strcpy(ProjectsArr[index].tagsHyphenated[i], ProjectsArr[index].tags[i]);
+			hyphenate_title(ProjectsArr[index].tagsHyphenated[i]);
 			ProjectsArr[index].tagsCount++;
 
 			// Loop though global tags to find duplicates
@@ -54,6 +57,9 @@ int gen_project_tags(int index)
 			if (duplicate == 0) {
 				strcpy(globalTags[globalTagNum], *(tokens + i));
 				trim_whitespace(globalTags[globalTagNum]);
+
+				strcpy(globalTagsHyphenated[globalTagNum], globalTags[globalTagNum]);
+				hyphenate_title(globalTagsHyphenated[globalTagNum]);
 				globalTagNum++;
 			}
 

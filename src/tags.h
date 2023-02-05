@@ -6,6 +6,7 @@
 
 
 char globalTags[BUFFER_SIZE][WORD_LENGTH];
+char globalTagsHyphenated[BUFFER_SIZE][WORD_LENGTH];
 int globalTagNum = 0;
 
 int gen_project_tags(int index);
