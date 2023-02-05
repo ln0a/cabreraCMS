@@ -173,7 +173,7 @@ int gen_visual_content(int index)
 	// Store the count of visual content into project
 	ProjectsArr[index].visualContentCount = count;
 
-	if (count > 0) {
+	if (verboseMode == 1 && count > 0) {
 		for (int i=0; i < count; i++) {
 			printf("File read:   %s\n", directoryContents[i]);
 			/* printf("File copied: %s\n", ProjectsArr[index].VisualContentArr[count].filename); */

@@ -16,7 +16,9 @@ char templateTags[][BUFFER_SIZE] = {
 };
 int templateTagsIndex[LEN(templateTags)];
 
-int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n]);
+int gen_html_from_template(int m, char indexTemplatePath[m],
+						   int n, char outputPath[n],
+						   int projectIndex);
 int gen_html_project_item(int index, int m, int tagsIndex[m],
 						  int buffer, char output[buffer]);
 int gen_html_gallery_item (int index, int buffer, char output[buffer]);

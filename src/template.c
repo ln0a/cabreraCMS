@@ -14,7 +14,7 @@
 
 
 // Generate the output html file from template.html and project structs
-int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n])
+int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n], int projectIndex)
 {
 	FILE *output;
 
@@ -105,8 +105,26 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 				// project
 				case 3:
-					// loop through all projects
-					for (int i = 0; i < projectsCount; i++) {
+					// Single file mode
+					if (outputMode == 0) {
+						// loop through all projects
+						for (int i = 0; i < projectsCount; i++) {
+							char content[TEXT_LENGTH] = {0};
+
+							strcat(outputHTML, "<li id=\"");
+							strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
+							strcat(outputHTML, "\" class=\"project\">");
+							strcat(outputHTML, "\n");
+
+							gen_html_project_item(i, LEN(templateTagsIndex), templateTagsIndex,
+												LEN(content), content);
+							strcat(outputHTML, content);
+
+							strcat(outputHTML, "</li>\n");
+						}
+					}
+					// Multi file Mode
+					else {
 						char content[TEXT_LENGTH] = {0};
 
 						strcat(outputHTML, "<li id=\"");
@@ -114,13 +132,24 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, "\" class=\"project\">");
 						strcat(outputHTML, "\n");
 
-						gen_html_project_item(i, LEN(templateTagsIndex), templateTagsIndex,
-											  LEN(content), content);
+						gen_html_project_item(projectIndex, LEN(templateTagsIndex), templateTagsIndex,
+											LEN(content), content);
 						strcat(outputHTML, content);
 
 						strcat(outputHTML, "</li>\n");
 					}
 
+					break;
+
+				// project_gallery
+				case 6:
+					strcat(outputHTML, "<ul id=\"project_gallery\">\n");
+
+					char content[TEXT_LENGTH] = {0};
+					gen_html_gallery_item(projectIndex, LEN(content), content);
+					strcat(outputHTML, content);
+
+					strcat(outputHTML, "</ul>\n");
 					break;
 
 				default:
@@ -185,21 +214,6 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 				}
 				break;
 
-			// project_gallery
-			case 6:
-				if (tagsIndex[i] == 1) {
-					strcat(output, "<ul id=\"project_gallery\">\n");
-
-					for (int j = 0; j < ProjectsArr[index].visualContentCount; j++) {
-						strcat(output, "<img class=\"lazy\" data-src=\"");
-						strcat(output, ProjectsArr[index].path);
-						strcat(output, ProjectsArr[index].VisualContentArr[j].filename);
-						strcat(output, "\">\n");
-					}
-
-					strcat(output, "</ul>\n");
-				}
-				break;
 		}
 	}
 

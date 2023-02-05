@@ -17,10 +17,14 @@
 
 extern char *optarg;
 
-char *defaultInputFile = "templates/index_template.html";
-char *defaultOutputFile = "out.html";
+char *defaultIndexTemplateFile = "templates/index_template.html";
+char *defaultProjectTemplateFile = "templates/project_template.html";
+char *defaultIndexOutputFile = "index.html";
 
 int verboseMode = 0;
 
+// 0 = Single file mode
+// 1 = Multi file mode
+int outputMode = 0;
 
 #endif
