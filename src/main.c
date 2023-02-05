@@ -80,7 +80,10 @@ int main(int argc, char *argv[])
 							   strlen(indexOutputFile), indexOutputFile, 0);
 
 		for (int i = 0; i < projectsCount; i++) {
-			char *projectOutputFile = strcat(ProjectsArr[i].path, "index.html");
+			char projectPath[PATH_LENGTH + 1];
+			strcpy(projectPath, ProjectsArr[i].path);
+
+			char *projectOutputFile = strcat(projectPath, "index.html");
 			gen_html_from_template(strlen(projectTemplateFile), projectTemplateFile,
 								   strlen(projectOutputFile), projectOutputFile,
 								   i);

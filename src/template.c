@@ -53,8 +53,9 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 						strcat(outputHTML, "<a id=\"");
 						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
-						strcat(outputHTML, "\" class=\"project_item\" href=\"#");
-						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
+						strcat(outputHTML, "\" class=\"project_item\" href=\"");
+						/* strcat(outputHTML, ProjectsArr[i].hyphenatedTitle); */
+						strcat(outputHTML, ProjectsArr[i].path);
 						strcat(outputHTML, "\">\n");
 
 						strcat(outputHTML, "<li class=\"title\">");
@@ -233,13 +234,15 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 		strcat(output, ProjectsArr[index].VisualContentArr[i].file);
 		strcat(output, "\" class=\"image_wrapper\">\n");
 
-		strcat(output, "<img class=\"lazy\" data-src=\"");
+		strcat(output, "<img src=\"");
 		strcat(output, ProjectsArr[index].path);
 		strcat(output, "img/");
 		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
 		strcat(output, "\">\n");
 
-		strcat(output, "<p></p>\n");
+		strcat(output, "<p>");
+		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
+		strcat(output, "</p>\n");
 
 		strcat(output, "</li>\n");
 	}
