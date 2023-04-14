@@ -67,6 +67,10 @@ int set_project_path(int index, int n, char dirName[n])
 	char prefix[WORD_LENGTH + 1];
 	char suffix[WORD_LENGTH + 1];
 
+	fullPath[0] = '\0';
+	prefix[0] = '\0';
+	suffix[0] = '\0';
+
 	strcpy(prefix, "projects/");
 	strcpy(suffix, "/");
 
