@@ -158,6 +158,7 @@ int gen_visual_content(int index)
 				strcmp(splitFilename[1], "JPG") == 0 ||
 				strcmp(splitFilename[1], "jpeg") == 0 ||
 				strcmp(splitFilename[1], "png") == 0 ||
+				strcmp(splitFilename[1], "webp") == 0 ||
 				strcmp(splitFilename[1], "gif") == 0
 				) {
 				// Copy full file name in project
