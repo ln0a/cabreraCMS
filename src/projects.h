@@ -32,7 +32,7 @@ struct Project {
 	char *dataHTML;
 	char textSplit[BUFFER_SIZE][WORD_LENGTH + 1];
 
-	struct VisualContent VisualContentArr[BUFFER_SIZE];
+	struct VisualContent VisualContentArr[VISUAL_BUFFER];
 	int visualContentCount;
 
 	char tags[BUFFER_SIZE][WORD_LENGTH + 1];
