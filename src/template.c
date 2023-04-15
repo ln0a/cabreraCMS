@@ -242,7 +242,7 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 		strcat(output, ProjectsArr[index].path);
 		strcat(output, "img/");
 		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
-		strcat(output, "\">\n");
+		strcat(output, "\" loading=\"lazy\">\n");
 
 		strcat(output, "<p>");
 		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
