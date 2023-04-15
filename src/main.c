@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	char *projectTemplateFile = defaultProjectTemplateFile;
 	char *indexOutputFile = defaultIndexOutputFile;
 	char *help =
-		"CabreraCMS Version 0.1\n"
+		"CabreraCMS Version 0.2\n"
 		"\n"
 		"Usage: cabreraCMS [option1] [file1] [option2] [file2] [options...]\n"
 		"\n"
