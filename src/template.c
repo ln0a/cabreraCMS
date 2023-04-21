@@ -49,12 +49,16 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 					strcat(outputHTML, "<ul class=\"projects_index\">\n");
 
 					for (int i = projectsCount - 1; i > 0; i--) {
-						/* printf("%s %s\n", ProjectsArr[i].date.dateStr, ProjectsArr[i].title); */
-
 						strcat(outputHTML, "<a id=\"");
 						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
-						strcat(outputHTML, "\" class=\"project_item\" href=\"");
-						/* strcat(outputHTML, ProjectsArr[i].hyphenatedTitle); */
+
+						// Check if project is the current project index.html and add extra class	
+						if (i == projectIndex) {
+							strcat(outputHTML, "\" class=\"project_item selected\" href=\"");
+						} else {
+							strcat(outputHTML, "\" class=\"project_item\" href=\"");
+						}
+
 						strcat(outputHTML, ProjectsArr[i].path);
 						strcat(outputHTML, "\">\n");
 
@@ -217,8 +221,8 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 
 					strcat(output, "</ul>\n");
 				}
-				break;
 
+				break;
 		}
 	}
 
