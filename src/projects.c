@@ -28,6 +28,10 @@ int create_project(int n, int index, char dirName[n])
 	strcpy(ProjectsArr[index].hyphenatedTitle, ProjectsArr[index].title);
 	hyphenate_title(ProjectsArr[index].hyphenatedTitle);
 
+	// Unhyphenate title for use in titles
+	strcpy(ProjectsArr[index].unhyphenatedTitle, ProjectsArr[index].title);
+	unhyphenate_title(ProjectsArr[index].unhyphenatedTitle);
+
 	// Create project path
 	set_project_path(index, n, dirName);
 
@@ -108,13 +112,26 @@ int get_title_from_dirname(int n, int index, char dirName[n])
 }
 
 
-// Hypenate title if multiple words
+// Hyphenate title if multiple words
 void hyphenate_title(char *title)
 {
 	int i = 0;
 	while (title[i] != '\0') {
 		if (title[i] == ' ') {
 			title[i] = '-';
+		}
+		i++;
+	}
+}
+
+
+// Unhyphenate title if hyphenated
+void unhyphenate_title(char *title)
+{
+	int i = 0;
+	while (title[i] != '\0') {
+		if (title[i] == '-') {
+			title[i] = ' ';
 		}
 		i++;
 	}

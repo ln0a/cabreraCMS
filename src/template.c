@@ -59,7 +59,7 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, "\">\n");
 
 						strcat(outputHTML, "<li class=\"title\">");
-						strcat(outputHTML, ProjectsArr[i].title);
+						strcat(outputHTML, ProjectsArr[i].unhyphenatedTitle);
 						strcat(outputHTML, "</li>\n");
 
 						strcat(outputHTML, "<li class=\"date\">");
