@@ -34,7 +34,7 @@ int explore_directory(char path[], int n, int buffer, char arr[n][buffer])
 	DIR *dir = opendir(path);
 
 	if (dir == NULL) {
-		printf("Could not open the current directory.");
+		printf("Could not open the current directory: %s.", path);
 		return 1;
 	}
 
