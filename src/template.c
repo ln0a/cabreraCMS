@@ -70,6 +70,14 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, ProjectsArr[i].date.dateStr);
 						strcat(outputHTML, "</li>\n");
 
+						strcat(outputHTML, "<ul class=\"tags\">");
+						for(int j = 0; j < ProjectsArr[i].tagsCount; j++) {
+							strcat(outputHTML, "<li class=\"tag\">");
+							strcat(outputHTML, ProjectsArr[i].tags[j]);
+							strcat(outputHTML, "</li>");
+						}
+						strcat(outputHTML, "</ul>\n");
+
 						strcat(outputHTML, "</a>\n");
 
 					}

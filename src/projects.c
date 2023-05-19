@@ -120,6 +120,12 @@ void hyphenate_title(char *title)
 		if (title[i] == ' ') {
 			title[i] = '-';
 		}
+		if (title[i] == '(') {
+			title[i] = '-';
+		}
+		if (title[i] == ')') {
+			title[i] = '-';
+		}
 		i++;
 	}
 }
