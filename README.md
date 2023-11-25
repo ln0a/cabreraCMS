@@ -11,7 +11,7 @@ libcmark
 ```
 git clone https://github.com/ln0a/cabreraCMS.git cabreraCMS
 cd cabreraCMS
-gcc -Ilibcmark -o src/main.c cabreraCMS
+gcc -Ilibcmark -o cabreraCMS src/main.c
 ```
 
 ## Usage
