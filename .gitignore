@@ -3,7 +3,7 @@
 *.webp
 *.png
 *.html
-*.md
 
-/projects
-index.html
+.projectile
+compile_flags.txt
+.DS_Store
