@@ -1,6 +1,6 @@
 # CABRERA CMS
 
-Flat file CMS built in C.
+Flat file CMS written in C.
 
 ## Requires
 ```
