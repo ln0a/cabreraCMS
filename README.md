@@ -9,8 +9,9 @@ libcmark
 
 ## Compile
 ```
--I/usr/local/lib
--I/usr/local/include
+git clone https://github.com/ln0a/cabreraCMS.git cabreraCMS
+cd cabreraCMS
+gcc -Ilibcmark -o src/main.c cabreraCMS
 ```
 
 ## Usage
