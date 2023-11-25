@@ -4,7 +4,7 @@ Flat file CMS written in C.
 
 ## Requires
 ```
-cmark
+libcmark
 ```
 
 ## Compile
