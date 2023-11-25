@@ -1,1 +1,0 @@
-Detroit, Adaptive Reuse

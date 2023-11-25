@@ -1,1 +1,0 @@
-Neighborhood Development, Detroit
