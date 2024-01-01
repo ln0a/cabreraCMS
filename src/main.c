@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 
 	// Go through program arguments
-	while ((opt = getopt(argc, argv, "i:p:o:smvh")) != -1) {
+	while ((opt = getopt(argc, argv, "ipo:smvh")) != -1) {
 		switch(opt) {
 		case 'i':
 			indexTemplateFile = optarg;
