@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "content.h"
 #include "macro.h"
 #include "file.h"
 #include "projects.h"
@@ -246,21 +247,74 @@ int gen_html_gallery_item (int index, int buffer, char output[buffer])
 	strcat(output, "\" class=\"project_gallery\">\n");
 
 	for (int i = 0; i < ProjectsArr[index].visualContentCount; i++) {
-		strcat(output, "<li id=\"");
-		strcat(output, ProjectsArr[index].VisualContentArr[i].file);
-		strcat(output, "\" class=\"image_wrapper\">\n");
+		// Store filename
+		char filenameBackup[WORD_LENGTH] = {0};
+		strcpy(filenameBackup, ProjectsArr[index].VisualContentArr[i].filename);
 
-		strcat(output, "<img src=\"");
-		strcat(output, ProjectsArr[index].path);
-		strcat(output, "img/");
-		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
-		strcat(output, "\" loading=\"lazy\">\n");
+		// Split filename for comparison
+		char splitFilename[2][WORD_LENGTH] = {0};
+		split_filename(index, i, LEN(filenameBackup), filenameBackup,
+					LEN(splitFilename), LEN(splitFilename[i]), splitFilename);
 
-		strcat(output, "<p>");
-		strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
-		strcat(output, "</p>\n");
+		// Check if file if video
+		if (strcmp(splitFilename[1], "mp4") == 0) {
+			strcat(output, "<li id=\"");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+			strcat(output, "\" class=\"video_wrapper\">\n");
 
-		strcat(output, "</li>\n");
+			strcat(output, "<video autoplay playsinline webkit-playsinline muted loop>");
+			
+			strcat(output, "<source src=\"");
+			strcat(output, ProjectsArr[index].path);
+			strcat(output, "img/");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+			strcat(output, ".webm\" type=\"video/webm\">\n");
+
+			strcat(output, "<source src=\"");
+			strcat(output, ProjectsArr[index].path);
+			strcat(output, "img/");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+			strcat(output, ".ogv\" type=\"video/ogv\">\n");
+
+			strcat(output, "<source src=\"");
+			strcat(output, ProjectsArr[index].path);
+			strcat(output, "img/");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+			strcat(output, ".mp4\" type=\"video/mp4\">\n");
+
+			strcat(output, "</video>\n");
+
+			strcat(output, "<p>");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
+			strcat(output, "</p>\n");
+
+			strcat(output, "</li>\n");
+			}
+
+		// If not it is image
+		else if (strcmp(splitFilename[1], "jpg") == 0 ||
+				strcmp(splitFilename[1], "JPG") == 0 ||
+				strcmp(splitFilename[1], "jpeg") == 0 ||
+				strcmp(splitFilename[1], "png") == 0 ||
+				strcmp(splitFilename[1], "webp") == 0 ||
+				strcmp(splitFilename[1], "gif") == 0 )
+			{
+			strcat(output, "<li id=\"");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].file);
+			strcat(output, "\" class=\"image_wrapper\">\n");
+
+			strcat(output, "<img src=\"");
+			strcat(output, ProjectsArr[index].path);
+			strcat(output, "img/");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
+			strcat(output, "\" loading=\"lazy\">\n");
+
+			strcat(output, "<p>");
+			strcat(output, ProjectsArr[index].VisualContentArr[i].filename);
+			strcat(output, "</p>\n");
+
+			strcat(output, "</li>\n");
+		}
 	}
 
 	strcat(output, "</ul>\n");

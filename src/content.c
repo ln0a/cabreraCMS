@@ -153,13 +153,17 @@ int gen_visual_content(int index)
 			strcmp(splitFilename[1], "md") == 0
 			) {}
 		else {
-			// Check for image formats
+			// Check for image or video formats
 			if (strcmp(splitFilename[1], "jpg") == 0 ||
 				strcmp(splitFilename[1], "JPG") == 0 ||
 				strcmp(splitFilename[1], "jpeg") == 0 ||
 				strcmp(splitFilename[1], "png") == 0 ||
 				strcmp(splitFilename[1], "webp") == 0 ||
-				strcmp(splitFilename[1], "gif") == 0
+				strcmp(splitFilename[1], "gif") == 0 ||
+
+				strcmp(splitFilename[1], "mp4") == 0 ||
+				strcmp(splitFilename[1], "ogv") == 0 ||
+				strcmp(splitFilename[1], "webm") == 0
 				) {
 				// Copy full file name in project
 				strcpy(ProjectsArr[index].VisualContentArr[count].filename, fullFilename);
