@@ -144,7 +144,7 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						char content[TEXT_LENGTH] = {0};
 
 						strcat(outputHTML, "<li id=\"");
-						strcat(outputHTML, ProjectsArr[i].hyphenatedTitle);
+						strcat(outputHTML, ProjectsArr[projectIndex].hyphenatedTitle);
 						strcat(outputHTML, "\" class=\"project\">");
 						strcat(outputHTML, "\n");
 
@@ -199,37 +199,33 @@ int gen_html_project_item(int index, int n, int tagsIndex[n], int buffer, char o
 		switch (i) {
 			// project_tags
 			case 4:
-				if (tagsIndex[i] == 1) {
-					strcat(output, "<ul class=\"project_tags\">\n");
+				strcat(output, "<ul class=\"project_tags\">\n");
 
-					for (int j = 0; j < ProjectsArr[index].tagsCount; j++) {
-						strcat(output, "<li project-tag=\"");
-						strcat(output, ProjectsArr[index].tagsHyphenated[j]);
-						strcat(output, "\">");
-						strcat(output, ProjectsArr[index].tags[j]);
-						strcat(output, "</li>\n");
-					}
-
-					strcat(output, "</ul>\n");
+				for (int j = 0; j < ProjectsArr[index].tagsCount; j++) {
+					strcat(output, "<li project-tag=\"");
+					strcat(output, ProjectsArr[index].tagsHyphenated[j]);
+					strcat(output, "\">");
+					strcat(output, ProjectsArr[index].tags[j]);
+					strcat(output, "</li>\n");
 				}
+
+				strcat(output, "</ul>\n");
 
 				break;
 
 			// project_text
 			case 5:
-				if (tagsIndex[i] == 1) {
-					strcat(output, "<ul class=\"project_text\">\n");
+				strcat(output, "<ul class=\"project_text\">\n");
 
-					strcat(output, "<div class=\"description\">\n");
-					strcat(output, ProjectsArr[index].textHTML);
-					strcat(output, "</div>\n");
+				strcat(output, "<div class=\"description\">\n");
+				strcat(output, ProjectsArr[index].textHTML);
+				strcat(output, "</div>\n");
 
-					strcat(output, "<ul class=\"data\">\n");
-					strcat(output, ProjectsArr[index].dataHTML);
-					strcat(output, "</ul>\n");
+				strcat(output, "<ul class=\"data\">\n");
+				strcat(output, ProjectsArr[index].dataHTML);
+				strcat(output, "</ul>\n");
 
-					strcat(output, "</ul>\n");
-				}
+				strcat(output, "</ul>\n");
 
 				break;
 		}
