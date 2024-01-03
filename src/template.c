@@ -63,12 +63,12 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 						strcat(outputHTML, ProjectsArr[i].path);
 						strcat(outputHTML, "\">\n");
 
-						strcat(outputHTML, "<li class=\"title\">");
-						strcat(outputHTML, ProjectsArr[i].unhyphenatedTitle);
-						strcat(outputHTML, "</li>\n");
-
 						strcat(outputHTML, "<li class=\"date\">");
 						strcat(outputHTML, ProjectsArr[i].date.dateStr);
+						strcat(outputHTML, "</li>\n");
+
+						strcat(outputHTML, "<li class=\"title\">");
+						strcat(outputHTML, ProjectsArr[i].unhyphenatedTitle);
 						strcat(outputHTML, "</li>\n");
 
 						strcat(outputHTML, "<ul class=\"tags\">");
@@ -154,6 +154,38 @@ int gen_html_from_template(int m, char templatePath[m], int n, char outputPath[n
 
 						strcat(outputHTML, "</li>\n");
 					}
+
+					break;
+
+				// project_tags
+				case 4:
+					strcat(outputHTML, "<ul class=\"project_tags\">\n");
+
+					for (int j = 0; j < ProjectsArr[projectIndex].tagsCount; j++) {
+						strcat(outputHTML, "<li project-tag=\"");
+						strcat(outputHTML, ProjectsArr[projectIndex].tagsHyphenated[j]);
+						strcat(outputHTML, "\">");
+						strcat(outputHTML, ProjectsArr[projectIndex].tags[j]);
+						strcat(outputHTML, "</li>\n");
+					}
+
+					strcat(outputHTML, "</ul>\n");
+
+					break;
+
+				// project_text
+				case 5:
+					strcat(outputHTML, "<ul class=\"project_text\">\n");
+
+					strcat(outputHTML, "<div class=\"description\">\n");
+					strcat(outputHTML, ProjectsArr[projectIndex].textHTML);
+					strcat(outputHTML, "</div>\n");
+
+					strcat(outputHTML, "<ul class=\"data\">\n");
+					strcat(outputHTML, ProjectsArr[projectIndex].dataHTML);
+					strcat(outputHTML, "</ul>\n");
+
+					strcat(outputHTML, "</ul>\n");
 
 					break;
 
